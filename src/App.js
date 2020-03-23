@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,7 +13,9 @@ import Home from './Home'
 import ReviewsContainer from './ReviewsContainer'
 
 export default function App() {
-  const [value, setValue] = useState('hello from context')
+  const [user, setUser] = useState(null)
+  // useMemo 1st arg - create user, 2nd arg - only when user changes
+  const value = useMemo(() => ({ user, setUser }), [ user, setUser ])
   return (
     <div className="App">
       <Router>
@@ -40,7 +42,7 @@ export default function App() {
 
       <Switch>
         {/* Wrap UserContext.Provider to all the routes that will use the global context */}
-        <UserContext.Provider value={{ value, setValue }}>
+        <UserContext.Provider value={value}>
           <Route exact path='/reviews'>
             <ReviewsContainer />
           </Route>
