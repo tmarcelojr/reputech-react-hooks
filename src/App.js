@@ -5,6 +5,7 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import useForm from './Utilities/useForm'
 import { FaUserCircle } from 'react-icons/fa'
 import reputech_logo from './Images/reputech_logo.png'
 import logo from './Images/logo.png'
@@ -14,17 +15,29 @@ import Home from './Home'
 import ReviewsContainer from './ReviewsContainer'
 
 export default function App() {
-  const [user, setUser] = useState(null)
-  // useMemo 1st arg - create user, 2nd arg - only when user changes
-  const value = useMemo(() => ({ user, setUser }), [ user, setUser ])
-  const handleSubmit = e => {
-    e.preventDefault()
-    console.log(username, password)
+
+  // =============== AUTH ===============
+  // Move above useForm(), to avoid errors
+  const login = async (values) => {
+    console.log('this is our values', values)
+    console.log('this is our values type', typeof(values))
+    try{
+      const loginRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/login', {
+        credentials: 'include',
+        method: 'POST',
+        body: JSON.stringify(values),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const loginJson = await loginRes.json()
+      } catch(err) {
+        console.log(err)
+      }
   }
-  const [username, setUsername ] = useState('')
-  const [password, setPassword ] = useState('')
-  const [email, setEmail ] = useState('')
-  const [about, setAbout ] = useState('')
+
+  const [values, handleChange, handleSubmit] = useForm(login)
+
   return (
     <div className="App">
       <Router>
@@ -85,8 +98,10 @@ export default function App() {
                       type='text'
                       name='username'
                       placeholder='username'
-                      value={username}
-                      onChange={e => setUsername(e.target.value)}
+                      // useForm is set as a blank object making this value will be undefined, set the default value as an empty string
+                      value={values.username || ''}
+                      // imported from useForm
+                      onChange={handleChange}
                       required
                     >
                     </input>
@@ -95,8 +110,8 @@ export default function App() {
                       type='password'
                       name='password'
                       placeholder='password'
-                      value={password}
-                      onChange={e => setPassword(e.target.value)}
+                      value={values.password || ''}
+                      onChange={handleChange}
                       required
                     >
                     </input>
@@ -114,8 +129,8 @@ export default function App() {
         </div>
 
       <Switch>
-        {/* Wrap UserContext.Provider to all the routes that will use the global context */}
-        <UserContext.Provider value={value}>
+        {/* { Encapsulate everything you want access to UserContext inside Provider } */}
+        <UserContext.Provider value={values}>
           <Route exact path='/reviews'>
             <ReviewsContainer />
           </Route>
