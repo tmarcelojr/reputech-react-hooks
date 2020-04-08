@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,6 +16,10 @@ import ReviewsContainer from './ReviewsContainer'
 
 export default function App() {
 
+  useEffect(() => {
+    checkLoginStatus()
+  })
+
   // =============== AUTH ===============
   // Move above useForm(), to avoid errors
   const login = async (values) => {
@@ -31,8 +35,10 @@ export default function App() {
       })
       const loginJson = await loginRes.json()
       if(loginJson.status === 200) {
-        setUser(loginJson.data.username)
         setAuthMessage(null)
+        console.log(authModal.current)
+        console.log(authModal)
+        
       }
       else{
         setAuthMessage(loginJson.message)
@@ -60,7 +66,27 @@ export default function App() {
       console.log(err);
     }
   }
+
+  const checkLoginStatus = async () => {
+    try{
+      const checkLoginRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/logged_in', {
+          credentials: 'include',
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+      })
+      const checkLoginJson = await checkLoginRes.json()
+      if(checkLoginRes.status === 200 ) {
+       console.log('logged in as', checkLoginJson.data.username)
+       setUser(checkLoginJson.data.username)
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
   
+  const authModal = useRef()
   const [user, setUser] = useState(null)
   const value = useMemo(() => ({ user, setUser }), [user, setUser])
   const [authMessage, setAuthMessage] = useState(null)
@@ -96,7 +122,8 @@ export default function App() {
 
         {/* LOGIN MODAL */}
         <div 
-          className='modal fade needs-validation' 
+          className='modal fade needs-validation'
+          ref={authModal} 
           id='loginModal' 
           tabIndex='-1' 
           role='dialog' 
