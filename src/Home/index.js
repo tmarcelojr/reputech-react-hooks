@@ -6,7 +6,7 @@ export default function Home() {
   return(
     <div className='py-5'>
       <h2>Home</h2>
-    <div>{user.username}</div>
+      <pre>{JSON.stringify(user, null, 2)}</pre>
     </div>
   )
 }
