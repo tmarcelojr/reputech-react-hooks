@@ -2,27 +2,19 @@
   text-align: center;
 }
 
+/* Nav bar */
 #logo {
-  height: 20pt;
+  height: 25pt;
   margin-top: 5pt;
   margin-right: 10pt;
 }
 
 .navbar {
   background: #264653;
+  font-size: 1.4em;
 }
 
-
-#logo {
-  height: 20pt;
-  margin-top: 5pt;
-  margin-right: 10pt;
-}
-
-.navbar {
-  background: #264653;
-}
-
+/* Login/Register Modal */
 #login_container {
   padding-top: 15%;
   margin: 0 auto;
@@ -114,4 +106,33 @@
 .fake_link {
   color: blue;
   cursor: pointer;
+}
+
+/* Logged in user */
+.username {
+  color: white;
+  cursor: default;
+  margin-left: 10px;
+}
+
+#user-menu {
+  display: flex;
+  align-items: center;
+}
+
+.fake-button {
+  font-size: 1.5em;
+  color: white;
+  background-color: inherit;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu-center {
+  right: auto;
+  left: 100%;
+  -webkit-transform: translate(-100%, 0);
+  -o-transform: translate(-100%, 0);
+  transform: translate(-100%, 0);
 }

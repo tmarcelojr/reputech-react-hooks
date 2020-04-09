@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,9 +13,10 @@ import './App.css'
 import { UserContext } from './Contexts/UserContext'
 import Home from './Home'
 import ReviewsContainer from './ReviewsContainer'
+import $ from 'jquery'
 
 export default function App() {
-
+  
   useEffect(() => {
     checkLoginStatus()
   })
@@ -23,7 +24,6 @@ export default function App() {
   // =============== AUTH ===============
   // Move above useForm(), to avoid errors
   const login = async (values) => {
-    console.log('we are loggin is using', values)
     try{
       const loginRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/login', {
         credentials: 'include',
@@ -36,21 +36,19 @@ export default function App() {
       const loginJson = await loginRes.json()
       if(loginJson.status === 200) {
         setAuthMessage(null)
-        console.log(authModal.current)
-        console.log(authModal)
-        
+        // useRef is not used due to conflict with bootstrap 4 modal (unable to toggle)
+        window.$('#loginModal').modal('hide')
+        setUser(loginJson.username)
       }
       else{
         setAuthMessage(loginJson.message)
       }
-
       } catch(err) {
         console.log(err)
       }
   }
 
   const register = async (values) => {
-    console.log('we are regisering using', values)
     try {
       const registerRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/register', {
         credentials: 'include',
@@ -61,6 +59,8 @@ export default function App() {
         }
       })
       const registerJson = await registerRes.json()
+      window.$('#loginModal').modal('hide')
+      setUser(registerJson.username)
       console.log(registerJson)
     } catch(err) {
       console.log(err);
@@ -78,27 +78,48 @@ export default function App() {
       })
       const checkLoginJson = await checkLoginRes.json()
       if(checkLoginRes.status === 200 ) {
-       console.log('logged in as', checkLoginJson.data.username)
+       // Set user here to check logged in user with server
        setUser(checkLoginJson.data.username)
       }
     } catch(err) {
       console.log(err);
     }
   }
-  
-  const authModal = useRef()
+
+  const logout = async () => {
+    console.log('we made it to logout')
+    try {
+      const logoutRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/logout', {
+          credentials: 'include',
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+      })
+      const logoutJson = await logoutRes.json()
+      console.log(logoutJson);
+      if(logoutRes.status === 200) {
+        setUser(null)
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
+
+  // Logged in user
   const [user, setUser] = useState(null)
   const value = useMemo(() => ({ user, setUser }), [user, setUser])
+  // Login & register
   const [authMessage, setAuthMessage] = useState(null)
   const [switchForm, setSwitchForm] = useState('login')
   const [values, handleChange, handleSubmit] = useForm(switchForm === 'login' ? login : register)
-
 
   return (
     <div className="App">
       <Router>
         <nav className='navbar navbar-expand-sm navbar-dark fixed-top'>
-          <ul className='navbar-nav mr-auto'>
+          <ul className='navbar-nav mr-auto px-3'>
             <li className='nav-item'>
               <img id='logo' src={reputech_logo} alt='logo'/>
             </li>
@@ -109,21 +130,52 @@ export default function App() {
               <Link className='nav-link' to='/reviews'>Reviews</Link>
             </li>
           </ul>
-          <ul className='navbar-nav ml-auto'>
-            <li 
-              className='nav-item nav-link'
-              data-toggle='modal' 
-              data-target='#loginModal'
-            >
-              <span className='login'><FaUserCircle id='login_icon'/> Login</span>
-            </li>
+          <ul className='navbar-nav ml-auto px-3'>
+            {
+              user === null
+              ?
+              <li 
+                className='nav-item nav-link'
+                data-toggle='modal' 
+                data-target='#loginModal'
+              >
+                <span className='login'><FaUserCircle id='login_icon'/>
+                  Login
+                </span>
+              </li>
+              :
+              <li id='user-menu' className='nav-item'>
+                <div className='dropdown'>
+                  <button
+                  type='button'
+                  className='dropdown-toggle fake-button'  
+                  data-toggle='dropdown'
+                  aria-haspopup='true'
+                  aria-expanded='false'
+                  id='dropdownMenuButton'
+                  ></button>
+                  <div 
+                    className='dropdown-menu dropdown-menu-center'
+                    aria-labelledby='dropdownMenuButton'
+                  >
+                  <button className='dropdown-item'>Edit Profile</button>
+                  <button 
+                    className='dropdown-item'
+                    onClick={() => logout()}
+                  >
+                    Logout
+                  </button>
+                  </div>
+                </div>
+                <i className='username' >{user}</i>
+              </li>
+            }
           </ul>
         </nav>
 
         {/* LOGIN MODAL */}
         <div 
           className='modal fade needs-validation'
-          ref={authModal} 
           id='loginModal' 
           tabIndex='-1' 
           role='dialog' 
