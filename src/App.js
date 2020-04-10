@@ -61,7 +61,6 @@ export default function App() {
       const registerJson = await registerRes.json()
       window.$('#loginModal').modal('hide')
       setUser(registerJson.username)
-      console.log(registerJson)
     } catch(err) {
       console.log(err);
     }
@@ -87,7 +86,6 @@ export default function App() {
   }
 
   const logout = async () => {
-    console.log('we made it to logout')
     try {
       const logoutRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/logout', {
           credentials: 'include',
@@ -139,7 +137,7 @@ export default function App() {
                 data-toggle='modal' 
                 data-target='#loginModal'
               >
-                <span className='login'><FaUserCircle id='login_icon'/>
+                <span className='login'><FaUserCircle className='mx-2' id='login_icon'/>
                   Login
                 </span>
               </li>
