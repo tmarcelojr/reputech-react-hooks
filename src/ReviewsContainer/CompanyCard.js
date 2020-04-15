@@ -79,7 +79,9 @@ const CompanyCard = ({
           <FaCaretDown />
         </button>
         <div className='collapse' id={'a' + companyId}>
-          <CompanyUserReviews />
+          <CompanyUserReviews 
+           
+          />
         </div> {/* collapse */}
       </div> {/* review_box */}
 
