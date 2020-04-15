@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { UserContext } from '../Contexts/UserContext'
-import StarRatings from 'react-star-ratings'
+import CompanyCard from './CompanyCard'
+
 
 export default function ReviewsContainer() {
   // User
@@ -63,13 +64,12 @@ export default function ReviewsContainer() {
                 reviewsForThisCo.push(userReviews[j])
               }
             }
-            // console.log('inside organizeReviews', companyReviews)
             companyReviews.push(reviewsForThisCo)
           }
           setOrganizedReviews(companyReviews)
-      }
-      organizeReviews()
-    } // if(companyData)
+        }
+        organizeReviews()
+      } // if(companyData)
   }, [userReviews])
 
   useEffect(() => {
@@ -87,7 +87,6 @@ export default function ReviewsContainer() {
         // Grabbing each array of ratings and using reduce() to sum the totals from left to right. If there are no user ratings we set it to 0 with 'or' condition
         const sum = companyRatings[k].reduce((a, b) => a + b, 0);
         const avg = (sum / companyRatings[k].length) || 0;
-        console.log('this is our averages in findUserAverageRatings', avg)
         averages.push(avg)
       }
       setCompanyUserRatings(averages)
@@ -95,84 +94,39 @@ export default function ReviewsContainer() {
     findUserAverageRatings()
   }, [organizedReviews])
 
+  const getUserRatings = (i) => {
+    if(companyUserRatings[i] === undefined) {
+      return companyUserRatings[i] = 0
+    }
+    else{
+      return Math.round(companyUserRatings[i] * 2)/2
+    }
+  }
+
+  const getCompanyUserRatings = (i) => {
+    if(averageRatings[i] === undefined) {
+      return averageRatings[i] = 0
+    }
+    else{
+      return Math.round(averageRatings[i][1]* 2)/2
+    }
+  } 
+
   return(
-    <div>
+    <div className='my-5 py-5'>
       {companyData.map((company, i) => {
         return(
-        <div key={i} className='card mb-5'>
-          <div className='row no-gutters'>
-            <div id='img-container' className='col-md-2'>
-              <img src={company.website_logo} style={{ height: '100px', width: '100px'}} className='card-img' alt='company logo' />
-            </div> { /* col-md-2 */ }
-            <div className='col-md-8'>
-              <div className='card-body'>
-                <button className='card-title'>
-				        	<strong>{company.name}</strong>
-				        </button> {/* card-title */}
-                <div id='star_container'>
-				        	<div className='star-line'>
-				        		<div>
-							        <h6 className='company_rating'>{Math.round((averageRatings[i][1]) * 2)/2}</h6>
-						        </div>
-						        <div>
-							        {/* <StarRatings 
-							        	rating={Math.round((averageRatings[i][1]) * 2)/2} 
-							        	starRatedColor='orange'
-							        	numberOfStars={5}
-							        	starDimension='20px'
-							        	name='rating'
-							        /> */}
-						        </div>
-					        </div> {/* star-line */}
-					        <small><i>Reputech rating:</i></small>
-					        <div className='star-line'>
-					        	<div>
-							        <h6 className='company_rating'>{Math.round(companyUserRatings[i] * 2)/2}</h6>
-						        </div>
-						        <div>
-							        {/* <StarRatings 
-							        	rating={Math.round(companyUserRatings[i] * 2)/2}
-							        	starRatedColor='crimson'
-							        	numberOfStars={5}
-							        	starDimension='20px'
-							        	name='rating'
-							        /> */}
-						        </div>
-					        </div> {/* star-line */}
-				        </div> {/* star-container */}
-              </div> {/* card-body */}
-            </div> {/* col-md-8 */}
-          </div> {/* row no-gutters */}
-        </div> // card mb-5
+          <CompanyCard
+            companyId={company.id}
+            companyName={company.name}
+            websiteLogo={company.website_logo}
+            companyWebsite={company.website}
+            averageCompanyRatings={getCompanyUserRatings(i)}
+            averageCompanyUserRatings={getUserRatings(i)}
+            key={i}
+          />
         )
       })}
     </div>
-    // <div className='py-5'>
-      
-    //   <p>helo</p>
-    //   <p>helo</p>
-    //   <p>helo</p>
-    //   <p>helo</p>
-    //   <p>helo</p>
-    //   <p>helo</p>
-    //   <p>helo</p>
-    //   <p>helo</p>
-    //   {averageRatings}
-    //   <p>hello</p>
-    //   <p>hello</p>
-    //   <p>hello</p>
-    //   <p>hello</p>
-    //   <p>hello</p>
-    //   <p>below is the array of ratings for the companies in order</p>
-    //   {companyUserRatings}
-    //   <p>hello</p>
-    //   <p>hello</p>
-    //   <p>hello</p>
-    //   {companyData.map((company, i) => {
-    //     return(
-    //       <strong>{company.name}</strong>
-    //     )
-    //   })}
-    // </div>
   )
 }
