@@ -14,9 +14,12 @@ import { UserContext } from './Contexts/UserContext'
 import Home from './Home'
 import ReviewsContainer from './ReviewsContainer'
 import $ from 'jquery'
+// Contexts
 import LoadingContext from './Contexts/LoadingContext'
 import CompanyContext from './Contexts/CompanyContext'
+import CompanyRatings from './Contexts/CompanyRatings'
 import CompanyUserReviewsContext from './Contexts/CompanyUserReviewsContext'
+
 
 export default function App() {
   // Logged in user
@@ -34,6 +37,13 @@ export default function App() {
   // User Reviews
   const [userReviews, setUserReviews] = useState([])
   const companyUserReviews = useMemo(() => ({ userReviews, setUserReviews }), [userReviews, setUserReviews])
+  // User Ratings
+  const [userRatings, setUserRatings] = useState([])
+  const companyUserRatings = useMemo(() => ({ userRatings, setUserRatings }), [userRatings, setUserRatings])
+  // Company Ratings
+  const [companyRatings, setCompanyRatings] = useState([])
+  const [averageRatings, setAverageRatings] = useState([])
+  const companyAverageRatings = useMemo(() => ({ averageRatings, setAverageRatings }), [averageRatings, setAverageRatings])
   
   useEffect(() => {
     async function getCompanyData() {
@@ -51,6 +61,16 @@ export default function App() {
         const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/')
         const reviewsJson = await reviewsRes.json()
         setUserReviews(reviewsJson.data)
+      } catch(err) {
+        console.log(err);
+      }
+    }
+    
+    async function getRatings() {
+      try{
+        const ratingRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/collected_reviews/')
+        const ratingJson = await ratingRes.json()
+        setAverageRatings(ratingJson.data)
         setIsLoading(false)
       } catch(err) {
         console.log(err);
@@ -59,9 +79,10 @@ export default function App() {
 
     getCompanyData()
     getCompanyReviews()
+    getRatings()
     checkLoginStatus()
   }, [])
-
+  
   // =============== AUTH ===============
   // Move above useForm(), to avoid errors
   const login = async (values) => {
@@ -336,23 +357,27 @@ export default function App() {
         </div>
 
       <Switch>
-        {/* { Encapsulate everything you want access to UserContext inside Provider } */}
+        {/* Encapsulate everything you want to have access to Providers' values */}
         <UserContext.Provider value={value}>
           <LoadingContext.Provider value={loading}>
+            {/* { Components that need company information, ratings, and reviews } */}
             <CompanyContext.Provider value={companyValues}>
-              <CompanyUserReviewsContext.Provider value={companyUserReviews}>
-                <Route exact path='/reviews'>
-                  <ReviewsContainer />
-                </Route>
-              </CompanyUserReviewsContext.Provider>
-              <Route exact path='/favorites'>
-
-              </Route>
-              <Route exact path='/'>
-                <Home />
-              </Route>
+              <CompanyRatings.Provider value={companyAverageRatings}>
+                <CompanyUserReviewsContext.Provider value={companyUserReviews}>
+                  <Route exact path='/reviews'>
+                    <ReviewsContainer />
+                  </Route>
+                </CompanyUserReviewsContext.Provider>
+                <Route exact path='/favorites'>
+                  {/* {Currently do not have a favorites section} */}
+                </Route>   
+              </CompanyRatings.Provider>
             </CompanyContext.Provider>
+            {/* { /Components needing company information, ratings, and reviews } */}
           </LoadingContext.Provider>
+          <Route exact path='/'>
+            <Home />
+          </Route>
         </UserContext.Provider>
       </Switch>
     </Router>

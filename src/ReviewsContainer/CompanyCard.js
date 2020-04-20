@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react'
 import StarRatings from 'react-star-ratings'
 import { FaCaretDown } from 'react-icons/fa'
 import CompanyUserReviews from './CompanyUserReviews'
-import CompanyContext from '../Contexts/CompanyContext'
 import CompanyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
 
 const CompanyCard = ({
@@ -15,12 +14,8 @@ const CompanyCard = ({
 }) => {
 
   const [averageRatings, setAverageRatings] = useState([])
-
-  const company = useContext(CompanyContext)
-  // console.log('this is our company using context', company.companyData)
-
   const reviews = useContext(CompanyUserReviewsContext)
-  // console.log('this is our reviews using context', reviews)
+
 
   useEffect(() => {
     async function getRatings() {
