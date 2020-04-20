@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect, useContext } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,12 +14,53 @@ import { UserContext } from './Contexts/UserContext'
 import Home from './Home'
 import ReviewsContainer from './ReviewsContainer'
 import $ from 'jquery'
+import LoadingContext from './Contexts/LoadingContext'
+import CompanyContext from './Contexts/CompanyContext'
+import CompanyUserReviewsContext from './Contexts/CompanyUserReviewsContext'
 
 export default function App() {
+  // Logged in user
+  const [user, setUser] = useState(null)
+  const value = useMemo(() => ({ user, setUser }), [user, setUser])
+  // Login & register
+  const [authMessage, setAuthMessage] = useState(null)
+  const [switchForm, setSwitchForm] = useState('login')
+  // Loading
+  const [isLoading, setIsLoading] = useState(true)
+  const loading = useMemo(() => ({ isLoading, setIsLoading }), [isLoading, setIsLoading])
+  // Company Data
+  const [companyData, setCompanyData] = useState([])
+  const companyValues = useMemo(() => ({ companyData, setCompanyData }), [companyData, setCompanyData])
+  // User Reviews
+  const [userReviews, setUserReviews] = useState([])
+  const companyUserReviews = useMemo(() => ({ userReviews, setUserReviews }), [userReviews, setUserReviews])
   
   useEffect(() => {
+    async function getCompanyData() {
+      try{
+        const companyDataRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/companies/')
+        const companyDataJson = await companyDataRes.json()
+        setCompanyData(companyDataJson.data)
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
+    async function getCompanyReviews() {
+      try{
+        const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/')
+        const reviewsJson = await reviewsRes.json()
+        setUserReviews(reviewsJson.data)
+        setIsLoading(false)
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
+    getCompanyData()
+    getCompanyReviews()
     checkLoginStatus()
-  })
+  }, [])
 
   // =============== AUTH ===============
   // Move above useForm(), to avoid errors
@@ -104,13 +145,6 @@ export default function App() {
     }
   }
 
-
-  // Logged in user
-  const [user, setUser] = useState(null)
-  const value = useMemo(() => ({ user, setUser }), [user, setUser])
-  // Login & register
-  const [authMessage, setAuthMessage] = useState(null)
-  const [switchForm, setSwitchForm] = useState('login')
   const [values, handleChange, handleSubmit] = useForm(switchForm === 'login' ? login : register)
 
   return (
@@ -304,15 +338,21 @@ export default function App() {
       <Switch>
         {/* { Encapsulate everything you want access to UserContext inside Provider } */}
         <UserContext.Provider value={value}>
-          <Route exact path='/reviews'>
-            <ReviewsContainer />
-          </Route>
-          <Route exact path='/favorites'>
+          <LoadingContext.Provider value={loading}>
+            <CompanyContext.Provider value={companyValues}>
+              <CompanyUserReviewsContext.Provider value={companyUserReviews}>
+                <Route exact path='/reviews'>
+                  <ReviewsContainer />
+                </Route>
+              </CompanyUserReviewsContext.Provider>
+              <Route exact path='/favorites'>
 
-          </Route>
-          <Route exact path='/'>
-            <Home />
-          </Route>
+              </Route>
+              <Route exact path='/'>
+                <Home />
+              </Route>
+            </CompanyContext.Provider>
+          </LoadingContext.Provider>
         </UserContext.Provider>
       </Switch>
     </Router>

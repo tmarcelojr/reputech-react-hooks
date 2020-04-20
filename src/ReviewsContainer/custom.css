@@ -1,0 +1,136 @@
+.reviews_container {
+	padding: 10%;
+}
+
+#star_container {
+	display: flex;
+	display: inline;
+}
+
+.star-line {
+  display: flex;
+  justify-content:  space-evenly;
+}
+
+.company_rating {
+  margin-top: 8px;
+  margin-right: 10px;
+	font-weight: 700;
+}
+
+.card-body {
+	margin-left: 30px;
+	display: flex;
+	display: inline-block;
+}
+
+.card-text {
+  margin-left: 50px;
+}
+
+.no-gutters {
+	box-shadow: 10px 5px 5px lightgray;
+}
+
+.card-title {
+	border: none;
+	text-decoration: none;
+	font-size: 1.5em;
+  margin-bottom: -.01em;
+}
+
+.col-md-1 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#img-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.card-img {
+	border: 3px solid gray;
+}
+
+/* Review box */
+.btn-danger {
+	margin-bottom: 10px;
+}
+
+#submit-area {
+ 	display: flex;
+ 	flex-direction: row-reverse;
+ 	padding: 10px;
+}
+
+#submit-button {
+	padding-left: 10px;
+}
+
+#collapse-button {
+	margin: 10px 0px;
+	background-color: rgb(45, 70, 82);
+}
+
+
+.review-box {
+  width: 100%;
+}
+
+/* STARS RATING CSS */
+
+.rating {
+  float: left;
+}
+
+.rating:not(:checked) > input {
+  position:absolute;
+  clip:rect(0,0,0,0);
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.rating:not(:checked) > label {
+  float:right;
+  width:1em;
+  padding:0 .1em;
+  overflow:hidden;
+  white-space:nowrap;
+  cursor:pointer;
+  font-size:200%;
+  line-height:1.2;
+  color:#ddd;
+}
+
+.rating:not(:checked) > label:before {
+  content: '★ ';
+}
+
+.rating > input:checked ~ label {
+  color: crimson;
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+  color: crimson;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+  color: crimson;
+  /*text-shadow:1px 1px crimson, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);*/
+}
+
+.rating > label:active {
+  position:relative;
+  top:2px;
+  left:2px;
+}
