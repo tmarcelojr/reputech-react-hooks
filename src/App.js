@@ -1,23 +1,26 @@
-import React, { useState, useMemo, useEffect, useContext } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from 'react-router-dom'
+// CSS
 import useForm from './Utilities/useForm'
 import { FaUserCircle } from 'react-icons/fa'
 import reputech_logo from './Images/reputech_logo.png'
 import logo from './Images/logo.png'
 import './App.css'
-import { UserContext } from './Contexts/UserContext'
+import $ from 'jquery'
+// Components
 import Home from './Home'
 import ReviewsContainer from './ReviewsContainer'
-import $ from 'jquery'
 // Contexts
+import { UserContext } from './Contexts/UserContext'
 import LoadingContext from './Contexts/LoadingContext'
 import CompanyContext from './Contexts/CompanyContext'
 import CompanyRatings from './Contexts/CompanyRatings'
+import CompanyUserRatings from './Contexts/CompanyUserRatings'
 import CompanyUserReviewsContext from './Contexts/CompanyUserReviewsContext'
 
 
@@ -37,14 +40,17 @@ export default function App() {
   // User Reviews
   const [userReviews, setUserReviews] = useState([])
   const companyUserReviews = useMemo(() => ({ userReviews, setUserReviews }), [userReviews, setUserReviews])
+  const [organizedReviews, setOrganizedReviews] = useState([])
   // User Ratings
-  const [userRatings, setUserRatings] = useState([])
-  const companyUserRatings = useMemo(() => ({ userRatings, setUserRatings }), [userRatings, setUserRatings])
+  const [companyUserRatings, setCompanyUserRatings] = useState([])
+  const companyAverageUserRatings = useMemo(() => ({ companyUserRatings, setCompanyUserRatings }), [companyUserRatings, setCompanyUserRatings])
   // Company Ratings
-  const [companyRatings, setCompanyRatings] = useState([])
   const [averageRatings, setAverageRatings] = useState([])
   const companyAverageRatings = useMemo(() => ({ averageRatings, setAverageRatings }), [averageRatings, setAverageRatings])
-  
+
+
+
+  // =============== FETCH CALLS ===============
   useEffect(() => {
     async function getCompanyData() {
       try{
@@ -82,6 +88,50 @@ export default function App() {
     getRatings()
     checkLoginStatus()
   }, [])
+
+  useEffect(() => {
+    if(userReviews){
+      async function organizeReviews() {
+        let companyReviews = []
+          for(let i = 0; i < companyData.length; i++) {
+            let reviewsForThisCo = []
+            // loop through userReviews array
+            for(let j=0; j < userReviews.length; j++) {
+              // if the user review id matches the company id
+              if(userReviews[j].company.id === companyData[i].id) {
+                reviewsForThisCo.push(userReviews[j])
+              }
+            }
+            companyReviews.push(reviewsForThisCo)
+          }
+          setOrganizedReviews(companyReviews)
+        }
+        organizeReviews()
+      } // if(companyData)
+  }, [userReviews, companyData])
+
+  useEffect(() => {
+    async function findUserAverageRatings() {
+      let companyRatings = []
+      let averages = []
+      for(let i = 0; i < organizedReviews.length; i++) {
+        let ratingsForCo = []
+        for(let j = 0; j < organizedReviews[i].length; j++) {
+          ratingsForCo.push(organizedReviews[i][j].stars)
+        }
+      companyRatings.push(ratingsForCo)
+      }
+      for(let k = 0; k < companyRatings.length; k++) {
+        // Grabbing each array of ratings and using reduce() to sum the totals from left to right. If there are no user ratings we set it to 0 with 'or' condition
+        const sum = companyRatings[k].reduce((a, b) => a + b, 0);
+        const avg = (sum / companyRatings[k].length) || 0;
+        averages.push(avg)
+      }
+      setCompanyUserRatings(averages)
+    }
+    findUserAverageRatings()
+  }, [organizedReviews])
+
   
   // =============== AUTH ===============
   // Move above useForm(), to avoid errors
@@ -362,16 +412,18 @@ export default function App() {
           <LoadingContext.Provider value={loading}>
             {/* { Components that need company information, ratings, and reviews } */}
             <CompanyContext.Provider value={companyValues}>
-              <CompanyRatings.Provider value={companyAverageRatings}>
-                <CompanyUserReviewsContext.Provider value={companyUserReviews}>
-                  <Route exact path='/reviews'>
-                    <ReviewsContainer />
-                  </Route>
-                </CompanyUserReviewsContext.Provider>
-                <Route exact path='/favorites'>
-                  {/* {Currently do not have a favorites section} */}
-                </Route>   
-              </CompanyRatings.Provider>
+              <CompanyUserRatings.Provider value={companyAverageUserRatings}>
+                <CompanyRatings.Provider value={companyAverageRatings}>
+                  <CompanyUserReviewsContext.Provider value={companyUserReviews}>
+                    <Route exact path='/reviews'>
+                      <ReviewsContainer />
+                    </Route>
+                  </CompanyUserReviewsContext.Provider>
+                  <Route exact path='/favorites'>
+                    {/* {Currently do not have a favorites section} */}
+                  </Route>   
+                </CompanyRatings.Provider>
+              </CompanyUserRatings.Provider>
             </CompanyContext.Provider>
             {/* { /Components needing company information, ratings, and reviews } */}
           </LoadingContext.Provider>
