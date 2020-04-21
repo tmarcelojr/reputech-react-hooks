@@ -39,8 +39,8 @@ export default function App() {
   const companyValues = useMemo(() => ({ companyData, setCompanyData }), [companyData, setCompanyData])
   // User Reviews
   const [userReviews, setUserReviews] = useState([])
-  const companyUserReviews = useMemo(() => ({ userReviews, setUserReviews }), [userReviews, setUserReviews])
   const [organizedReviews, setOrganizedReviews] = useState([])
+  const companyUserReviews = useMemo(() => ({ organizedReviews, setOrganizedReviews }), [organizedReviews, setOrganizedReviews])
   // User Ratings
   const [companyUserRatings, setCompanyUserRatings] = useState([])
   const companyAverageUserRatings = useMemo(() => ({ companyUserRatings, setCompanyUserRatings }), [companyUserRatings, setCompanyUserRatings])
@@ -132,7 +132,6 @@ export default function App() {
     findUserAverageRatings()
   }, [organizedReviews])
 
-  
   // =============== AUTH ===============
   // Move above useForm(), to avoid errors
   const login = async (values) => {

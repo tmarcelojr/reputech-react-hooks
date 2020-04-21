@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import StarRatings from 'react-star-ratings'
 import { FaCaretDown } from 'react-icons/fa'
 import CompanyUserReviews from './CompanyUserReviews'
 import CompanyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
+import LoadingContext from '../Contexts/LoadingContext'
 
 const CompanyCard = ({
   companyId,
@@ -13,33 +14,7 @@ const CompanyCard = ({
   averageCompanyUserRatings
 }) => {
 
-  const [averageRatings, setAverageRatings] = useState([])
   const reviews = useContext(CompanyUserReviewsContext)
-
-
-  useEffect(() => {
-    async function getRatings() {
-      try{
-        const ratingRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/collected_reviews/')
-        const ratingJson = await ratingRes.json()
-        setAverageRatings(ratingJson.data)
-        getCompanyUserRatings()
-      } catch(err) {
-        console.log(err);
-      }
-    }
-    getRatings()
-  }, [])
-
-
-  const getCompanyUserRatings = (i) => {
-    if(averageRatings[i] === undefined) {
-      return averageRatings[i] = 0
-    }
-    else{
-      return Math.round(averageRatings[i][1]* 2)/2
-    }
-  } 
 
   return(
     <>
@@ -108,11 +83,11 @@ const CompanyCard = ({
             <FaCaretDown />
           </button>
           <div className='collapse text-left' id={'a' + companyId}>
-            {/* <CompanyUserReviews 
-              companyData={companyData}
-              averageCompanyRatings={averageCompanyRatings}
-              averageCompanyUserRatings={averageCompanyUserRatings}
-            /> */}
+            {/* {console.log(companyId - 1)} */}
+            <CompanyUserReviews
+              reviews={reviews.organizedReviews[companyId - 1]}
+              companyId={companyId}
+            />
           </div> {/* collapse */}
         </div> {/* review_box */}
       </div> {/* row no-gutters */}   

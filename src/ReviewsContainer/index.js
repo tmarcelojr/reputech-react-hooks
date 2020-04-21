@@ -1,16 +1,14 @@
 import React, { useContext, useState } from 'react'
-import { UserContext } from '../Contexts/UserContext'
 import LoadingContext from '../Contexts/LoadingContext'
 import CompanyContext from '../Contexts/CompanyContext'
 import CompanyRatings from '../Contexts/CompanyRatings'
 import CompanyUserRatings from '../Contexts/CompanyUserRatings'
+// import CompanyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
 import CompanyCard from './CompanyCard'
 import './custom.css'
 
 
 export default function ReviewsContainer() {
-  // User
-  const user = useContext(UserContext)
   // Loading
   const loading = useContext(LoadingContext)
   // Company data
@@ -22,7 +20,10 @@ export default function ReviewsContainer() {
   // Company user ratings
   const averageUserRatings = useContext(CompanyUserRatings)
   const [averageCompanyUserRatings, setAverageCompanyUserRatings] = useState([])
-  
+  // Company user reviews
+  // const reviews = useContext(CompanyUserReviewsContext)
+  // const [companyReviews, setCompanyReviews] = useState([])
+
   // Conditional to only run once 
   if(loading.isLoading === false && getAverages === false) {
     const averages = []
@@ -37,6 +38,7 @@ export default function ReviewsContainer() {
     })
     setAverageCompanyRatings(averages)
     setAverageCompanyUserRatings(userRatingsForCompany)
+    // setCompanyReviews(reviews.organizedReviews)
     setGetAverages(true)
   }
 
@@ -55,6 +57,7 @@ export default function ReviewsContainer() {
               companyName={companyInfo.name}
               averageCompanyRatings={averageCompanyRatings[i]}
               averageCompanyUserRatings={averageCompanyUserRatings[i]}
+              // reviews={companyReviews[i]}
             />
           )
         })
