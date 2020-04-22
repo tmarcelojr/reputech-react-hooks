@@ -3,7 +3,6 @@ import useForm from '../Utilities/useForm'
 
 
 const CompanyUserReviews = (companyId) => {
-  const [reviews, setReviews] = useState([])
 
   //Add Review
   const createReview = async (values) => {
@@ -18,7 +17,7 @@ const CompanyUserReviews = (companyId) => {
       })
       const createReviewJson = await createReviewRes.json()
       if(createReviewRes.status === 201) {
-        setReviews(createReviewJson.data)
+        console.log('Successfully added review', createReviewJson)
       }
     } catch(err) {
       console.log(err);

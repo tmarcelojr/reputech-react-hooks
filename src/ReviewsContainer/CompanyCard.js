@@ -83,7 +83,6 @@ const CompanyCard = ({
             <FaCaretDown />
           </button>
           <div className='collapse text-left' id={'a' + companyId}>
-            {/* {console.log(companyId - 1)} */}
             <CompanyUserReviews
               reviews={reviews.organizedReviews[companyId - 1]}
               companyId={companyId}
