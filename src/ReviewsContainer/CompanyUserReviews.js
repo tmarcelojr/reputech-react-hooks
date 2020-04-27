@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import StarRatings from 'react-star-ratings'
-import AddUserReview from './AddUserReview'
 
 const CompanyUserReviews = ({ reviews, companyId }) => {
   return(
@@ -27,14 +26,6 @@ const CompanyUserReviews = ({ reviews, companyId }) => {
             </div>
           )
         })
-      }
-      {
-        reviews.length === 0
-        ? 
-        <AddUserReview 
-          companyId={companyId}
-        />
-        : null
       }
     </div>
   )

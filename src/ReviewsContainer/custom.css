@@ -11,6 +11,18 @@
   display: flex;
 }
 
+.company-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 50px;
+  margin: 20px;
+} 
+
+.company-card {
+  width: fit-content;
+}
+
 .company_rating {
   margin-top: 8px;
   margin-right: 10px;
@@ -18,13 +30,13 @@
 }
 
 .card-body {
-	margin-left: 30px;
 	display: flex;
-	display: inline-block;
+  display: inline-block;
 }
 
 .card-text {
-  margin-left: 50px;
+  margin-left: 20px;
+  padding-bottom: 20px;
 }
 
 .no-gutters {
@@ -48,10 +60,6 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-.card-img {
-	border: 3px solid gray;
 }
 
 /* Review box */

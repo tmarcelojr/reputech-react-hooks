@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import useForm from '../Utilities/useForm'
 
 
-const CompanyUserReviews = (companyId) => {
+const AddUserReview = (companyId) => {
+
+  console.log(companyId)
 
   //Add Review
   const createReview = async (values) => {
@@ -88,4 +90,4 @@ const CompanyUserReviews = (companyId) => {
   )
 }
 
-export default CompanyUserReviews
+export default AddUserReview

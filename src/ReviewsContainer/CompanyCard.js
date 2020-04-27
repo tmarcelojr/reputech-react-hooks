@@ -1,9 +1,6 @@
 import React, { useContext, useState } from 'react'
 import StarRatings from 'react-star-ratings'
-import { FaCaretDown } from 'react-icons/fa'
-import CompanyUserReviews from './CompanyUserReviews'
 import CompanyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
-import LoadingContext from '../Contexts/LoadingContext'
 
 const CompanyCard = ({
   companyId,
@@ -17,11 +14,11 @@ const CompanyCard = ({
   const reviews = useContext(CompanyUserReviewsContext)
 
   return(
-    <>
+    <div className='company-card'>
     {/* Company Card */}
     <div className='card mb-5'>
-      <div className='row no-gutters'>
-        <div id='img-container' className='col-md-2'>
+      <div className='row no-gutters' style={{ width: '35rem', height: '15rem' }}>
+        <div id='img-container' className='col-md-3'>
           <img src={websiteLogo} style={{ height: '100px', width: '100px'}} className='card-img' alt='company logo' />
         </div> { /* col-md-2 */ }
         <div className='col-md-8 text-left'>
@@ -68,30 +65,9 @@ const CompanyCard = ({
             rel='noopener noreferrer'
             > {companyWebsite}</a></p>
           </div> {/* col-md-8 */}
-
-        {/* {User Reviews Container} */}
-        <div className='review-box'>
-          <button
-            id='collapse-button'
-            className='btn btn-primary' 
-            type='button' 
-            data-toggle='collapse' 
-            data-target={'#a' + companyId} 
-            aria-expanded='false' 
-            aria-controls={'a' + companyId}
-          >
-            <FaCaretDown />
-          </button>
-          <div className='collapse text-left' id={'a' + companyId}>
-            <CompanyUserReviews
-              reviews={reviews.organizedReviews[companyId - 1]}
-              companyId={companyId}
-            />
-          </div> {/* collapse */}
-        </div> {/* review_box */}
       </div> {/* row no-gutters */}   
     </div> {/* card mb-5 */}
-    </>
+    </div>
   )
 }
 
