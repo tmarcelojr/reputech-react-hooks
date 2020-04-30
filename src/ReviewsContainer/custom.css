@@ -1,7 +1,3 @@
-.reviews_container {
-	padding: 10%;
-}
-
 #star_container {
 	display: flex;
 	display: inline;
@@ -87,57 +83,79 @@
   width: 100%;
 }
 
+#review-card {
+  height: 200px;
+}
+
 /* STARS RATING CSS */
-
-.rating {
-  float: left;
-}
-
-.rating:not(:checked) > input {
-  position:absolute;
-  clip:rect(0,0,0,0);
-  height: 0;
-  width: 0;
+.star-rating {
+  margin-top: 5px;
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  height: 30px;
   overflow: hidden;
+  position: relative;
+  background: url('https://i.imgur.com/9YwKExw.png');
+  background-size: contain;
+}
+.star-rating i {
   opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 1;
+  background: url('https://i.imgur.com/BCi4DWw.png');
+  background-size: contain;
+}
+.star-rating input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+.star-rating input:hover + i,
+.star-rating input:checked + i {
+  opacity: 1;
+}
+.star-rating i ~ i {
+  width: 40%;
+}
+.star-rating i ~ i ~ i {
+  width: 60%;
+}
+.star-rating i ~ i ~ i ~ i {
+  width: 80%;
+}
+.star-rating i ~ i ~ i ~ i ~ i {
+  width: 100%;
+}
+::after,
+::before {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: middle;
 }
 
-.rating:not(:checked) > label {
-  float:right;
-  width:1em;
-  padding:0 .1em;
-  overflow:hidden;
-  white-space:nowrap;
-  cursor:pointer;
-  font-size:200%;
-  line-height:1.2;
-  color:#ddd;
-}
+.star-rating.star-5 {width: 150px;}
+.star-rating.star-5 input,
+.star-rating.star-5 i {width: 20%;}
+.star-rating.star-5 i ~ i {width: 40%;}
+.star-rating.star-5 i ~ i ~ i {width: 60%;}
+.star-rating.star-5 i ~ i ~ i ~ i {width: 80%;}
+.star-rating.star-5 i ~ i ~ i ~ i ~i {width: 100%;}
 
-.rating:not(:checked) > label:before {
-  content: '★ ';
-}
-
-.rating > input:checked ~ label {
-  color: crimson;
-}
-
-.rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
-  color: crimson;
-}
-
-.rating > input:checked + label:hover,
-.rating > input:checked + label:hover ~ label,
-.rating > input:checked ~ label:hover,
-.rating > input:checked ~ label:hover ~ label,
-.rating > label:hover ~ input:checked ~ label {
-  color: crimson;
-  /*text-shadow:1px 1px crimson, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);*/
-}
-
-.rating > label:active {
-  position:relative;
-  top:2px;
-  left:2px;
-}
+.star-rating.star-3 {width: 150px;}
+.star-rating.star-3 input,
+.star-rating.star-3 i {width: 33.33%;}
+.star-rating.star-3 i ~ i {width: 66.66%;}
+.star-rating.star-3 i ~ i ~ i {width: 100%;}

@@ -1,29 +1,48 @@
 import React, { useContext } from 'react'
 import StarRatings from 'react-star-ratings'
+import CompanyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
 
-const CompanyUserReviews = ({ reviews, companyId }) => {
+const CompanyUserReviews = ({ companyId }) => {
+  const reviews = useContext(CompanyUserReviewsContext)
   return(
-    <div className='review-container'>
+    <div>
       {
-        reviews.map((review, i) => {
+        reviews.organizedReviews.map((companyReviews, i) => {
           return(
-            <div key={i} >
-              <div
-                className='card border-dark mb-3' 
-                style={{maxWidth: '100%'}}
-              >
-                <div className='card-header'>
-                  <StarRatings 
-                    rating={review.stars}
-                    starRatedColor='crimson'
-                    numberOfStars={5}
-                    starDimension='20px'
-                    name='rating'
-                  />
-                  <h5 className='card-title'>{review.title}</h5>
-                </div> {/* card-header */}
-              </div> {/* card border-dark mb-3 */}
-            </div>
+            <div key={i}>
+            {
+              companyReviews.map((review, j)=> {
+                return(
+                  <div key={j}>
+                  {
+                    review.company.id === companyId
+                    ?
+                    <div className='reviews-container'>
+                      <div
+                      className='card border-dark mb-3'
+                      id='review-card'
+                      style={{ maxWidth: '100% '}}
+                      >
+                        <div className='card-header'>
+                          <StarRatings 
+                            rating={review.stars}
+                            starRatedColor='crimson'
+                            numberOfStars={5}
+                            starDimension='20px'
+                            name='rating'
+                          />
+                          <h5 className='card-title'>{review.title}</h5>
+                          <p>{review.content}</p>
+                        </div> {/* card-header */}
+                    </div> {/* card border-dark mb-3 */}
+                  </div> // reviews-container
+                  : null
+                  }
+                  </div> // key j
+                )
+              })
+            }
+            </div> // key i
           )
         })
       }
