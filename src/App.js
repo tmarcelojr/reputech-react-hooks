@@ -51,6 +51,7 @@ export default function App() {
 
 
   // =============== FETCH CALLS ===============
+
   useEffect(() => {
     async function getCompanyData() {
       try{
