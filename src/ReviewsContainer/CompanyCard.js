@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import StarRatings from 'react-star-ratings'
 import CompanyUserReviews from './CompanyUserReviews'
 import { FcComments } from "react-icons/fc";
-import CompanyContext from '../Contexts/CompanyContext'
 
 const CompanyCard = ({
   companyId,
@@ -12,10 +11,6 @@ const CompanyCard = ({
   averageCompanyRatings, 
   averageCompanyUserRatings
 }) => {
-
-  const companyContext = useContext(CompanyContext)
-  console.log('this is our companycontext', companyContext)
- 
   return(
     <div className='company-card'>
     {/* Company Card */}

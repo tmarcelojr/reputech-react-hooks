@@ -1,13 +1,11 @@
 import React from 'react'
 import useForm from '../Utilities/useForm'
 
-
-const AddUserReview = (companyId) => {
-
+const AddUserReview = (props) => {
   //Add Review
   const createReview = async (values) => {
     try{
-      const createReviewRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/' + companyId.companyId, {
+      const createReviewRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/' + props.companyId, {
           credentials: 'include',
           method: 'POST',
           body: JSON.stringify(values),
@@ -18,11 +16,13 @@ const AddUserReview = (companyId) => {
       const createReviewJson = await createReviewRes.json()
       if(createReviewRes.status === 201) {
         console.log('Successfully added review', createReviewJson)
+        props.updateCompanyCardData()
       }
     } catch(err) {
       console.log(err);
     }
   }
+
   const [values, handleChange, handleSubmit] = useForm(createReview)
 
   return(
@@ -42,7 +42,6 @@ const AddUserReview = (companyId) => {
             required
           /> {/* form-control */}
         </div> {/* form-group - title */}
-
         <div className='form-group'>
           <label htmlFor='content'>Review:</label>
           <input 

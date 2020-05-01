@@ -23,7 +23,6 @@ import CompanyRatings from './Contexts/CompanyRatings'
 import CompanyUserRatings from './Contexts/CompanyUserRatings'
 import CompanyUserReviewsContext from './Contexts/CompanyUserReviewsContext'
 
-
 export default function App() {
   // Logged in user
   const [user, setUser] = useState(null)
@@ -48,6 +47,16 @@ export default function App() {
   const [averageRatings, setAverageRatings] = useState([])
   const companyAverageRatings = useMemo(() => ({ averageRatings, setAverageRatings }), [averageRatings, setAverageRatings])
 
+  
+  const updateReviews = async function getCompanyReviews() {
+    try{
+      const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/')
+      const reviewsJson = await reviewsRes.json()
+      setUserReviews(reviewsJson.data)
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
 
   // =============== FETCH CALLS ===============
@@ -132,6 +141,7 @@ export default function App() {
     }
     findUserAverageRatings()
   }, [organizedReviews])
+
 
   // =============== AUTH ===============
   // Move above useForm(), to avoid errors
@@ -414,7 +424,7 @@ export default function App() {
             <CompanyContext.Provider value={companyValues}>
               <CompanyUserRatings.Provider value={companyAverageUserRatings}>
                 <CompanyRatings.Provider value={companyAverageRatings}>
-                  <CompanyUserReviewsContext.Provider value={companyUserReviews}>
+                  <CompanyUserReviewsContext.Provider value={{companyUserReviews, updateReviews }}>
                     <Route exact path='/reviews'>
                       <ReviewsContainer />
                     </Route>
