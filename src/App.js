@@ -16,7 +16,7 @@ import $ from 'jquery'
 import Home from './Home'
 import ReviewsContainer from './ReviewsContainer'
 // Contexts
-import { UserContext } from './Contexts/UserContext'
+import UserContext from './Contexts/UserContext'
 import LoadingContext from './Contexts/LoadingContext'
 import CompanyContext from './Contexts/CompanyContext'
 import CompanyRatings from './Contexts/CompanyRatings'
@@ -62,7 +62,6 @@ export default function App() {
     }
 
     async function getCompanyReviews() {
-      console.log('we are in getcompanyreviews')
       try{
         const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/')
         const reviewsJson = await reviewsRes.json()
@@ -138,7 +137,7 @@ export default function App() {
         companyUserAverages.push(avg)
       }
       companyUserAverages.map(userRatings => {
-        averageUserRatings.push(Math.round(userRatings * 2/2))
+        return averageUserRatings.push(Math.round(userRatings * 2/2))
       })
       setCompanyUserRatings(averageUserRatings)
     }
@@ -148,7 +147,6 @@ export default function App() {
   useEffect(() => {
     setUpdateReviews(false)
     async function getCompanyReviews() {
-      console.log('we are in getcompanyreviews')
       try{
         const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/')
         const reviewsJson = await reviewsRes.json()

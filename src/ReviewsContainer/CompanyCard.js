@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import StarRatings from 'react-star-ratings'
 import CompanyUserReviews from './CompanyUserReviews'
 import AddUserReview from './AddUserReview'
@@ -86,7 +86,7 @@ const CompanyCard = ({
                 </div>
                 <div className="modal-body">
                   <AddUserReview companyId={companyId} updateReviews={updateReviews} />
-                  <CompanyUserReviews companyId={companyId} />
+                  <CompanyUserReviews companyId={companyId} updateReviews={updateReviews}/>
                 </div> {/* modal-body */}
               </div> {/* modal-content */}
             </div> {/* modal-dialog */}

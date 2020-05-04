@@ -1,9 +1,30 @@
 import React, { useContext } from 'react'
 import StarRatings from 'react-star-ratings'
 import CompanyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
+import UserContext from '../Contexts/UserContext'
 
-const CompanyUserReviews = ({ companyId }) => {
+const CompanyUserReviews = (props) => {
   const reviews = useContext(CompanyUserReviewsContext)
+  const userContext = useContext(UserContext)
+
+  const deleteReview = async (id) => {
+    try {
+      const deleteReviewRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/' + id, {
+        credentials: 'include',
+        method: 'DELETE'
+      })
+      const deleteReviewJson = await deleteReviewRes.json();
+      if(deleteReviewJson.status === 200) {
+        // props.updateReviews()  
+      }
+
+      else {
+        throw new Error('Could not delete review.')
+      }
+    } catch(err) {
+      console.error(err)
+    }
+  }
 
   return(
     <div>
@@ -16,7 +37,7 @@ const CompanyUserReviews = ({ companyId }) => {
                 return(
                   <div key={j}>
                   {
-                    review.company.id === companyId
+                    review.company.id === props.companyId
                     ?
                     <div className='reviews-container'>
                       <div
@@ -34,6 +55,16 @@ const CompanyUserReviews = ({ companyId }) => {
                           />
                           <h5 className='card-title'>{review.title}</h5>
                           <p>{review.content}</p>
+                          {review.creator.username}
+                          {
+                            review.creator.username === userContext.user
+                            ? <button 
+                                onClick={() => deleteReview(review.id)}
+                              >
+                                Delete
+                              </button>
+                            : null
+                          }
                         </div> {/* card-header */}
                     </div> {/* card border-dark mb-3 */}
                   </div> // reviews-container

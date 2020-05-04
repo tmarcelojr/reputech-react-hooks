@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import LoadingContext from '../Contexts/LoadingContext'
 import CompanyContext from '../Contexts/CompanyContext'
 import CompanyRatings from '../Contexts/CompanyRatings'
