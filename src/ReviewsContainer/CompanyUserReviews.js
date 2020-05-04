@@ -15,7 +15,8 @@ const CompanyUserReviews = (props) => {
       })
       const deleteReviewJson = await deleteReviewRes.json();
       if(deleteReviewJson.status === 200) {
-        // props.updateReviews()  
+        const newUserReviewsArray = reviews.unorganizedUserReviews.userReviews.filter(review => review.id !== id)
+        reviews.unorganizedUserReviews.setUserReviews(newUserReviewsArray) 
       }
 
       else {
@@ -29,7 +30,7 @@ const CompanyUserReviews = (props) => {
   return(
     <div>
       {
-        reviews.organizedReviews.map((companyReviews, i) => {
+        reviews.companyUserReviews.organizedReviews.map((companyReviews, i) => {
           return(
             <div key={i}>
             {

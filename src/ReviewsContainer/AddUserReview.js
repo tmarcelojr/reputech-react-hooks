@@ -1,14 +1,19 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import useForm from '../Utilities/useForm'
+import CompanyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
 
 const AddUserReview = (props) => {
+  const reviews = useContext(CompanyUserReviewsContext)
+
   //Add Review
   const createReview = async (values) => {
+    // Need to turn stars into int
+    let newValues = {title: values.title, content: values.content, stars: parseInt(values.stars)}
     try{
       const createReviewRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/' + props.companyId, {
           credentials: 'include',
           method: 'POST',
-          body: JSON.stringify(values),
+          body: JSON.stringify(newValues),
           headers: {
             'Content-Type': 'application/json'
           }
@@ -16,7 +21,7 @@ const AddUserReview = (props) => {
       const createReviewJson = await createReviewRes.json()
       if(createReviewRes.status === 201) {
         console.log('Successfully added review', createReviewJson)
-        props.updateReviews()
+        reviews.unorganizedUserReviews.setUserReviews(userReviews => [...userReviews, createReviewJson.data])
       }
     } catch(err) {
       console.log(err);

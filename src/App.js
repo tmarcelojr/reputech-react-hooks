@@ -37,6 +37,9 @@ export default function App() {
   const companyValues = useMemo(() => ({ companyData, setCompanyData }), [companyData, setCompanyData])
   // User Reviews
   const [userReviews, setUserReviews] = useState([])
+  // unorganizedUserReviews will be used to update userReviews array 
+  const unorganizedUserReviews = useMemo(() => ({ userReviews, setUserReviews }), [userReviews, setUserReviews])
+  // Organized Reviews
   const [organizedReviews, setOrganizedReviews] = useState([])
   const companyUserReviews = useMemo(() => ({ organizedReviews, setOrganizedReviews }), [organizedReviews, setOrganizedReviews])
   // User Ratings
@@ -45,8 +48,6 @@ export default function App() {
   // Company Ratings
   const [averageRatings, setAverageRatings] = useState([])
   const companyAverageRatings = useMemo(() => ({ averageRatings, setAverageRatings }), [averageRatings, setAverageRatings])
-  // Update Reviews
-  const [updateReviews, setUpdateReviews] = useState(false)
 
   // =============== FETCH CALLS ===============
 
@@ -143,20 +144,6 @@ export default function App() {
     }
     findUserAverageRatings()
   }, [organizedReviews])
-
-  useEffect(() => {
-    setUpdateReviews(false)
-    async function getCompanyReviews() {
-      try{
-        const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/')
-        const reviewsJson = await reviewsRes.json()
-        setUserReviews(reviewsJson.data)
-      } catch(err) {
-        console.log(err);
-      }
-    }
-    getCompanyReviews()
-  }, [updateReviews])
 
   // =============== AUTH ===============
   // Move above useForm(), to avoid errors
@@ -438,9 +425,9 @@ export default function App() {
             {/* { Components that need company information, ratings, and reviews } */}
             <CompanyContext.Provider value={companyValues}>
               <CompanyRatings.Provider value={{companyAverageRatings, companyAverageUserRatings}}>
-                <CompanyUserReviewsContext.Provider value={companyUserReviews}>
+                <CompanyUserReviewsContext.Provider value={{companyUserReviews, unorganizedUserReviews}}>
                   <Route exact path='/reviews'>
-                    <ReviewsContainer updateReviews={() => setUpdateReviews(true)}/>
+                    <ReviewsContainer />
                   </Route>
                 </CompanyUserReviewsContext.Provider>
                 <Route exact path='/favorites'>

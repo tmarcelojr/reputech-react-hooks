@@ -6,7 +6,7 @@ import CompanyCard from './CompanyCard'
 import './custom.css'
 
 
-export default function ReviewsContainer({updateReviews}) {
+export default function ReviewsContainer() {
   // Loading
   const loading = useContext(LoadingContext)
   // Company data
@@ -29,7 +29,6 @@ export default function ReviewsContainer({updateReviews}) {
               companyName={companyInfo.name}
               averageCompanyRatings={ratings.companyAverageRatings.averageRatings[i]}
               averageCompanyUserRatings={ratings.companyAverageUserRatings.companyUserRatings[i]}
-              updateReviews={updateReviews}
             />
           )
         })

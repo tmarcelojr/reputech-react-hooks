@@ -85,8 +85,8 @@ const CompanyCard = ({
                   </button>
                 </div>
                 <div className="modal-body">
-                  <AddUserReview companyId={companyId} updateReviews={updateReviews} />
-                  <CompanyUserReviews companyId={companyId} updateReviews={updateReviews}/>
+                  <AddUserReview companyId={companyId} />
+                  <CompanyUserReviews companyId={companyId} />
                 </div> {/* modal-body */}
               </div> {/* modal-content */}
             </div> {/* modal-dialog */}
