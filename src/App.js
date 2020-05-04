@@ -45,6 +45,8 @@ export default function App() {
   // Company Ratings
   const [averageRatings, setAverageRatings] = useState([])
   const companyAverageRatings = useMemo(() => ({ averageRatings, setAverageRatings }), [averageRatings, setAverageRatings])
+  // Update Reviews
+  const [updateReviews, setUpdateReviews] = useState(false)
 
   // =============== FETCH CALLS ===============
 
@@ -60,6 +62,7 @@ export default function App() {
     }
 
     async function getCompanyReviews() {
+      console.log('we are in getcompanyreviews')
       try{
         const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/')
         const reviewsJson = await reviewsRes.json()
@@ -89,6 +92,7 @@ export default function App() {
     getRatings()
     checkLoginStatus()
   }, [])
+
 
   useEffect(() => {
     if(userReviews){
@@ -140,6 +144,21 @@ export default function App() {
     }
     findUserAverageRatings()
   }, [organizedReviews])
+
+  useEffect(() => {
+    setUpdateReviews(false)
+    async function getCompanyReviews() {
+      console.log('we are in getcompanyreviews')
+      try{
+        const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/')
+        const reviewsJson = await reviewsRes.json()
+        setUserReviews(reviewsJson.data)
+      } catch(err) {
+        console.log(err);
+      }
+    }
+    getCompanyReviews()
+  }, [updateReviews])
 
   // =============== AUTH ===============
   // Move above useForm(), to avoid errors
@@ -423,7 +442,7 @@ export default function App() {
               <CompanyRatings.Provider value={{companyAverageRatings, companyAverageUserRatings}}>
                 <CompanyUserReviewsContext.Provider value={companyUserReviews}>
                   <Route exact path='/reviews'>
-                    <ReviewsContainer />
+                    <ReviewsContainer updateReviews={() => setUpdateReviews(true)}/>
                   </Route>
                 </CompanyUserReviewsContext.Provider>
                 <Route exact path='/favorites'>

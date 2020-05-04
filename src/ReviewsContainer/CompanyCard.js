@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import StarRatings from 'react-star-ratings'
 import CompanyUserReviews from './CompanyUserReviews'
+import AddUserReview from './AddUserReview'
 import { FcComments } from "react-icons/fc";
 
 const CompanyCard = ({
@@ -9,8 +10,10 @@ const CompanyCard = ({
   websiteLogo, 
   companyWebsite,
   averageCompanyRatings, 
-  averageCompanyUserRatings
+  averageCompanyUserRatings,
+  updateReviews
 }) => {
+
   return(
     <div className='company-card'>
     {/* Company Card */}
@@ -82,6 +85,7 @@ const CompanyCard = ({
                   </button>
                 </div>
                 <div className="modal-body">
+                  <AddUserReview companyId={companyId} updateReviews={updateReviews} />
                   <CompanyUserReviews companyId={companyId} />
                 </div> {/* modal-body */}
               </div> {/* modal-content */}

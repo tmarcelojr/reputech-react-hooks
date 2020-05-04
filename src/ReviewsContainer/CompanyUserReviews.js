@@ -1,17 +1,12 @@
 import React, { useContext } from 'react'
 import StarRatings from 'react-star-ratings'
 import CompanyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
-import AddUserReview from './AddUserReview'
 
 const CompanyUserReviews = ({ companyId }) => {
   const reviews = useContext(CompanyUserReviewsContext)
 
   return(
     <div>
-      <AddUserReview 
-        companyId={companyId} 
-        // addReview={}
-      />
       {
         reviews.organizedReviews.map((companyReviews, i) => {
           return(

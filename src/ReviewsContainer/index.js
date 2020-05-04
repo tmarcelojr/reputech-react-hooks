@@ -1,22 +1,18 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import LoadingContext from '../Contexts/LoadingContext'
 import CompanyContext from '../Contexts/CompanyContext'
 import CompanyRatings from '../Contexts/CompanyRatings'
-import UpdateReviews from '../Contexts/UpdateReviews'
 import CompanyCard from './CompanyCard'
 import './custom.css'
 
 
-export default function ReviewsContainer() {
+export default function ReviewsContainer({updateReviews}) {
   // Loading
   const loading = useContext(LoadingContext)
   // Company data
   const company = useContext(CompanyContext)
   // Company ratings
   const ratings = useContext(CompanyRatings)
-  
-  const updateReviews = useContext(UpdateReviews)
-
 
   return(
     <div className='my-5 company-card-container'>
@@ -33,6 +29,7 @@ export default function ReviewsContainer() {
               companyName={companyInfo.name}
               averageCompanyRatings={ratings.companyAverageRatings.averageRatings[i]}
               averageCompanyUserRatings={ratings.companyAverageUserRatings.companyUserRatings[i]}
+              updateReviews={updateReviews}
             />
           )
         })
