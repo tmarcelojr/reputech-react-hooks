@@ -20,7 +20,6 @@ import { UserContext } from './Contexts/UserContext'
 import LoadingContext from './Contexts/LoadingContext'
 import CompanyContext from './Contexts/CompanyContext'
 import CompanyRatings from './Contexts/CompanyRatings'
-import CompanyUserRatings from './Contexts/CompanyUserRatings'
 import CompanyUserReviewsContext from './Contexts/CompanyUserReviewsContext'
 
 export default function App() {
@@ -46,18 +45,6 @@ export default function App() {
   // Company Ratings
   const [averageRatings, setAverageRatings] = useState([])
   const companyAverageRatings = useMemo(() => ({ averageRatings, setAverageRatings }), [averageRatings, setAverageRatings])
-
-  
-  const updateReviews = async function getCompanyReviews() {
-    try{
-      const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/')
-      const reviewsJson = await reviewsRes.json()
-      setUserReviews(reviewsJson.data)
-    } catch(err) {
-      console.log(err);
-    }
-  }
-
 
   // =============== FETCH CALLS ===============
 
@@ -86,7 +73,11 @@ export default function App() {
       try{
         const ratingRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/collected_reviews/')
         const ratingJson = await ratingRes.json()
-        setAverageRatings(ratingJson.data)
+        let companyRatings = []
+        ratingJson.data.map(ratings => {
+          return companyRatings.push(Math.round(ratings[1] * 2/2))
+        })
+        setAverageRatings(companyRatings)
         setIsLoading(false)
       } catch(err) {
         console.log(err);
@@ -122,26 +113,33 @@ export default function App() {
 
   useEffect(() => {
     async function findUserAverageRatings() {
-      let companyRatings = []
-      let averages = []
+      // Grab ratings from organizedReviews
+      let userRatings = []
+      let companyUserAverages = []
+      // Find averages of organized ratings
+      let averageUserRatings = []
+
       for(let i = 0; i < organizedReviews.length; i++) {
         let ratingsForCo = []
         for(let j = 0; j < organizedReviews[i].length; j++) {
           ratingsForCo.push(organizedReviews[i][j].stars)
         }
-      companyRatings.push(ratingsForCo)
+      userRatings.push(ratingsForCo)
       }
-      for(let k = 0; k < companyRatings.length; k++) {
+
+      for(let k = 0; k < userRatings.length; k++) {
         // Grabbing each array of ratings and using reduce() to sum the totals from left to right. If there are no user ratings we set it to 0 with 'or' condition
-        const sum = companyRatings[k].reduce((a, b) => a + b, 0);
-        const avg = (sum / companyRatings[k].length) || 0;
-        averages.push(avg)
+        const sum = userRatings[k].reduce((a, b) => a + b, 0);
+        const avg = (sum / userRatings[k].length) || 0;
+        companyUserAverages.push(avg)
       }
-      setCompanyUserRatings(averages)
+      companyUserAverages.map(userRatings => {
+        averageUserRatings.push(Math.round(userRatings * 2/2))
+      })
+      setCompanyUserRatings(averageUserRatings)
     }
     findUserAverageRatings()
   }, [organizedReviews])
-
 
   // =============== AUTH ===============
   // Move above useForm(), to avoid errors
@@ -422,18 +420,16 @@ export default function App() {
           <LoadingContext.Provider value={loading}>
             {/* { Components that need company information, ratings, and reviews } */}
             <CompanyContext.Provider value={companyValues}>
-              <CompanyUserRatings.Provider value={companyAverageUserRatings}>
-                <CompanyRatings.Provider value={companyAverageRatings}>
-                  <CompanyUserReviewsContext.Provider value={{companyUserReviews, updateReviews }}>
-                    <Route exact path='/reviews'>
-                      <ReviewsContainer />
-                    </Route>
-                  </CompanyUserReviewsContext.Provider>
-                  <Route exact path='/favorites'>
-                    {/* {Currently do not have a favorites section} */}
-                  </Route>   
-                </CompanyRatings.Provider>
-              </CompanyUserRatings.Provider>
+              <CompanyRatings.Provider value={{companyAverageRatings, companyAverageUserRatings}}>
+                <CompanyUserReviewsContext.Provider value={companyUserReviews}>
+                  <Route exact path='/reviews'>
+                    <ReviewsContainer />
+                  </Route>
+                </CompanyUserReviewsContext.Provider>
+                <Route exact path='/favorites'>
+                  {/* {Currently do not have a favorites section} */}
+                </Route>   
+              </CompanyRatings.Provider>
             </CompanyContext.Provider>
             {/* { /Components needing company information, ratings, and reviews } */}
           </LoadingContext.Provider>

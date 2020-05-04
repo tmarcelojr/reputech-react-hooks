@@ -16,7 +16,7 @@ const AddUserReview = (props) => {
       const createReviewJson = await createReviewRes.json()
       if(createReviewRes.status === 201) {
         console.log('Successfully added review', createReviewJson)
-        props.updateCompanyCardData()
+        props.addReview()
       }
     } catch(err) {
       console.log(err);

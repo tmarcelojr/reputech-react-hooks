@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import StarRatings from 'react-star-ratings'
 import CompanyUserReviews from './CompanyUserReviews'
 import { FcComments } from "react-icons/fc";

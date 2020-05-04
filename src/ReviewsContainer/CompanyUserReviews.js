@@ -5,16 +5,15 @@ import AddUserReview from './AddUserReview'
 
 const CompanyUserReviews = ({ companyId }) => {
   const reviews = useContext(CompanyUserReviewsContext)
-  console.log(reviews)
 
   return(
     <div>
       <AddUserReview 
-        companyId={companyId}
-        updateCompanyCardData={() => reviews.updateReviews()}
+        companyId={companyId} 
+        // addReview={}
       />
       {
-        reviews.companyUserReviews.organizedReviews.map((companyReviews, i) => {
+        reviews.organizedReviews.map((companyReviews, i) => {
           return(
             <div key={i}>
             {
