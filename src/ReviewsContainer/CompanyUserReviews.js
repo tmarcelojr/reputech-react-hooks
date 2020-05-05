@@ -40,7 +40,7 @@ const CompanyUserReviews = (props) => {
                   {
                     review.company.id === props.companyId
                     ?
-                    <div className='reviews-container'>
+                    <div className='reviews-container text-left'>
                       <div
                       className='card border-dark mb-3'
                       id='review-card'
@@ -54,10 +54,11 @@ const CompanyUserReviews = (props) => {
                             starDimension='20px'
                             name='rating'
                           />
-                          <h5 className='card-title'>{review.title}</h5>
-                          <p>{review.content}</p>
-                          {review.creator.username}
-                          {review.id}
+                          <span>
+                            <h5 className='card-title'>{review.title}</h5>
+                            <i>by: {review.creator.username}</i>
+                          </span>
+                
                           {
                             review.creator.username === userContext.user
                             ?
@@ -82,6 +83,9 @@ const CompanyUserReviews = (props) => {
                             : null
                           }
                         </div> {/* card-header */}
+                        <div className='reviews-list'>
+                          "{review.content}"
+                        </div> {/* card-body */}
                     </div> {/* card border-dark mb-3 */}
                   </div> // reviews-container
                   : null

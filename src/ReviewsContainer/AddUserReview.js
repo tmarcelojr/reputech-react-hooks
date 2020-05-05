@@ -29,17 +29,16 @@ const AddUserReview = (props) => {
   }
 
   const [values, handleChange, handleSubmit] = useForm(createReview)
-  
+
   return(
     <>
     <div className='well px-3'>
       <form className='review-form' data-toggle='validator' onSubmit={handleSubmit}>
-        <div className='form-group'>
+        <div className='form-group text-left'>
           <label htmlFor='title'>Title:</label>
           <input 
             type='text' 
             className='form-control' 
-            id='title' 
             name='title'
             placeholder='Title Review'
             value={values.title || ''}
@@ -47,12 +46,11 @@ const AddUserReview = (props) => {
             required
           /> {/* form-control */}
         </div> {/* form-group - title */}
-        <div className='form-group'>
+        <div className='form-group text-left'>
           <label htmlFor='content'>Review:</label>
           <input 
             className='form-control'
             type='text'
-            id='content' 
             name='content'
             placeholder='Add your review here...'
             rows='3'
@@ -64,6 +62,12 @@ const AddUserReview = (props) => {
 
         {/* Submit Area */}
         <div id='submit-area'>
+          <div 
+            className='btn btn-secondary cancel-button'
+            onClick={() => props.cancelReview()}
+          >
+            Cancel
+          </div>
           <div id='submit-button'>
             <button className='btn btn-danger'>
               Post Review

@@ -50,7 +50,6 @@ const EditUserReview = (props) => {
             <input 
               type='text' 
               className='form-control' 
-              id='title' 
               name='title'
               placeholder={props.companyValues.title}
               value={values.title || ''}
@@ -63,7 +62,6 @@ const EditUserReview = (props) => {
             <input 
               className='form-control'
               type='text'
-              id='content' 
               name='content'
               placeholder={props.companyValues.content}
               rows='3'
@@ -75,6 +73,12 @@ const EditUserReview = (props) => {
 
           {/* Submit Area */}
           <div id='submit-area'>
+            <div 
+                className='btn btn-secondary cancel-button' 
+                onClick={() => props.cancelReview()}
+              >
+                Cancel
+            </div>
             <div className='submit-button'>
               <button className='btn btn-danger'>
                 Update Review
@@ -90,16 +94,8 @@ const EditUserReview = (props) => {
                 <input type="radio" name='stars' value={5} onChange={handleChange} required/><i></i>
               </span>
             </div> {/* form-group - rating */}
-
           </div> {/* submit-area */}
         </form> {/* review_form */}
-        <button 
-          className='btn btn-secondary' 
-          id='cancel-edit-button'
-          onClick={() => props.cancelReview()}
-        >
-          Cancel
-        </button>
       </div> // well
     }
     </div>

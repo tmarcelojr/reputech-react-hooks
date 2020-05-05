@@ -4,7 +4,7 @@ import CompanyUserReviews from './CompanyUserReviews'
 import AddUserReview from './AddUserReview'
 import EditUserReview from './EditUserReview'
 import UserContext from '../Contexts/UserContext'
-import { FcComments } from "react-icons/fc";
+import { FcComments, FcLike, FcLikePlaceholder } from "react-icons/fc";
 
 const CompanyCard = ({
   companyId,
@@ -17,6 +17,8 @@ const CompanyCard = ({
 
   const user = useContext(UserContext)
   const [editReview, setEditReview] = useState()
+  const [addReview, setAddReview] = useState(false)
+  const [favorite, setFavorite] = useState(false)
 
   return(
     <div className='company-card'>
@@ -74,24 +76,59 @@ const CompanyCard = ({
           <button
             data-toggle="modal"
             data-target={'#a' + String(companyId)}
+            className='company-reviews-button'
           >
             <FcComments />
           </button>
+          
+          <div id="hover" onClick={() => favorite === true ? setFavorite(false) : setFavorite(true)}>
+            {
+              favorite === false
+              ?
+              <button 
+                className='company-reviews-button'
+              >
+                <FcLikePlaceholder />
+              </button>
+              :
+              <button 
+                className='company-reviews-button'
+              >
+                <FcLike />
+              </button>
+            }
+            <div id="popup"><i>Favorites is coming soon...</i></div> 
+          </div>
 
           {/* <!-- Modal --> */}
           <div className="modal fade" id={'a' + String(companyId)} tabIndex="-1" role="dialog" aria-labelledby={'a' + String(companyId)} aria-hidden="true" >
             <div className="modal-dialog" role="document">
               <div className="modal-content"  style={{ width: '50rem' }}>
                 <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">Company Reviews</h5>
+                  <h5 className="modal-title" id="exampleModalLabel">{companyName} Reviews</h5>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div className="modal-body">
+                <div className="modal-body text-right">
                   {
-                    user.user !== null && editReview === undefined
-                    ? <AddUserReview companyId={companyId} />
+                    editReview !== undefined || addReview === true
+                    ? null
+                    :
+                    <button 
+                      className='btn btn-success my-2'
+                      onClick={() => setAddReview(true)}
+                    >
+                      Add Review
+                    </button>
+                  }
+                  {
+                    user.user !== null && addReview === true
+                    ? 
+                    <AddUserReview 
+                      companyId={companyId}
+                      cancelReview={() => setAddReview(false)}
+                    />
                     : null
                   }
                   {

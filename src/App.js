@@ -11,7 +11,6 @@ import { FaUserCircle } from 'react-icons/fa'
 import reputech_logo from './Images/reputech_logo.png'
 import logo from './Images/logo.png'
 import './App.css'
-import $ from 'jquery'
 // Components
 import Home from './Home'
 import ReviewsContainer from './ReviewsContainer'
@@ -25,7 +24,7 @@ import CompanyUserReviewsContext from './Contexts/CompanyUserReviewsContext'
 export default function App() {
   // Logged in user
   const [user, setUser] = useState(null)
-  const value = useMemo(() => ({ user, setUser }), [user, setUser])
+  const userValue = useMemo(() => ({ user, setUser }), [user, setUser])
   // Login & register
   const [authMessage, setAuthMessage] = useState(null)
   const [switchForm, setSwitchForm] = useState('login')
@@ -159,10 +158,9 @@ export default function App() {
       })
       const loginJson = await loginRes.json()
       if(loginJson.status === 200) {
-        setAuthMessage(null)
-        // useRef is not used due to conflict with bootstrap 4 modal (unable to toggle)
-        window.$('#loginModal').modal('hide')
         setUser(loginJson.username)
+        setAuthMessage(null)
+        window.location.reload()
       }
       else{
         setAuthMessage(loginJson.message)
@@ -183,8 +181,8 @@ export default function App() {
         }
       })
       const registerJson = await registerRes.json()
-      window.$('#loginModal').modal('hide')
       setUser(registerJson.username)
+      window.location.reload()
     } catch(err) {
       console.log(err);
     }
@@ -420,7 +418,7 @@ export default function App() {
 
       <Switch>
         {/* Encapsulate everything you want to have access to Providers' values */}
-        <UserContext.Provider value={value}>
+        <UserContext.Provider value={userValue}>
           <LoadingContext.Provider value={loading}>
             {/* { Components that need company information, ratings, and reviews } */}
             <CompanyContext.Provider value={companyValues}>
