@@ -17,10 +17,6 @@ const CompanyCard = ({
 
   const user = useContext(UserContext)
   const [editReview, setEditReview] = useState()
-  
-  const cancelEditReview = () => {
-    setEditReview()
-  }
 
   return(
     <div className='company-card'>
@@ -112,15 +108,15 @@ const CompanyCard = ({
                     ? 
                     <EditUserReview 
                       companyValues={editReview}
-                      cancelReview={() => cancelEditReview()}
+                      cancelReview={() => setEditReview(undefined)}
                     />
                     : null
                   }
-              
                 </div> {/* modal-body */}
               </div> {/* modal-content */}
             </div> {/* modal-dialog */}
           </div> {/* modal-fade */}
+
         </div> {/* reviews-button-area */}
       </div> {/* row no-gutters */}
     </div> {/* card mb-5 */}

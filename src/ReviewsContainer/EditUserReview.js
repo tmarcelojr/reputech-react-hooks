@@ -1,18 +1,18 @@
-import React, { useContext} from 'react'
+import React, { useContext } from 'react'
 import useForm from '../Utilities/useForm'
 import CompanyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
 
 const EditUserReview = (props) => {
   const reviews = useContext(CompanyUserReviewsContext)
-  console.log(reviews)
 
   // Update Review
   const updateReview = async (newInfo) => {
+    let newValues = {title: newInfo.title, content: newInfo.content, stars: parseInt(newInfo.stars)}
     try {
       const updateReviewRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/' + props.companyValues.id, {
         credentials: 'include',
         method: 'PUT',
-        body: JSON.stringify(newInfo),
+        body: JSON.stringify(newValues),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -21,8 +21,18 @@ const EditUserReview = (props) => {
       const updateReviewJson = await updateReviewRes.json()
       if(updateReviewJson.status === 200) {
         console.log('Successfully updated review', updateReviewJson.data)
-        reviews.unorganizedUserReviews.setUserReviews(userReviews => [...userReviews, updateReviewJson.data])
+        async function getCompanyReviews() {
+          try{
+            const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/')
+            const reviewsJson = await reviewsRes.json()
+            reviews.unorganizedUserReviews.setUserReviews(reviewsJson.data)
+          } catch(err) {
+            console.log(err);
+          }
+        }
+        getCompanyReviews()
       }
+      props.cancelReview()
     } catch(err) {
       console.log(err);
     }
@@ -42,8 +52,8 @@ const EditUserReview = (props) => {
               className='form-control' 
               id='title' 
               name='title'
-              placeholder='Title Review'
-              value={values.title || props.companyValues.title}
+              placeholder={props.companyValues.title}
+              value={values.title || ''}
               onChange={handleChange}
               required
             /> {/* form-control */}
@@ -55,9 +65,9 @@ const EditUserReview = (props) => {
               type='text'
               id='content' 
               name='content'
-              placeholder='Add your review here...'
+              placeholder={props.companyValues.content}
               rows='3'
-              value={values.content || props.companyValues.content}
+              value={values.content || ''}
               onChange={handleChange}
               required
             />
