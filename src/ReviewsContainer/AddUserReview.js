@@ -29,7 +29,7 @@ const AddUserReview = (props) => {
   }
 
   const [values, handleChange, handleSubmit] = useForm(createReview)
-
+  
   return(
     <>
     <div className='well px-3'>
@@ -72,11 +72,11 @@ const AddUserReview = (props) => {
 
           <div className='form-group'>
             <span className="star-rating star-5">
-              <input type="radio" name='stars' value={1} onChange={handleChange} /><i></i>
-              <input type="radio" name='stars' value={2} onChange={handleChange} /><i></i>
-              <input type="radio" name='stars' value={3} onChange={handleChange} /><i></i>
-              <input type="radio" name='stars' value={4} onChange={handleChange} /><i></i>
-              <input type="radio" name='stars' value={5} onChange={handleChange} /><i></i>
+              <input type="radio" name='stars' value={1} onChange={handleChange} required/><i></i>
+              <input type="radio" name='stars' value={2} onChange={handleChange} required/><i></i>
+              <input type="radio" name='stars' value={3} onChange={handleChange} required/><i></i>
+              <input type="radio" name='stars' value={4} onChange={handleChange} required/><i></i>
+              <input type="radio" name='stars' value={5} onChange={handleChange} required/><i></i>
             </span>
           </div> {/* form-group - rating */}
 

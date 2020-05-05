@@ -7,6 +7,7 @@ const useForm = submitCallback => {
   const handleSubmit = e => {
     e.preventDefault()
     submitCallback(state)
+    setState({})
   }
 
   const handleChange = e => {

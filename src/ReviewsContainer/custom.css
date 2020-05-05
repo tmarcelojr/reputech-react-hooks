@@ -59,7 +59,7 @@
 }
 
 /* Review box */
-.btn-danger {
+.btn-danger, .btn-secondary {
 	margin-bottom: 10px;
 }
 
@@ -69,8 +69,8 @@
  	padding: 10px;
 }
 
-#submit-button {
-	padding-left: 10px;
+.submit-button, #cancel-edit-button {
+  margin-left: 10px;
 }
 
 #collapse-button {
@@ -90,6 +90,7 @@
 /* STARS RATING CSS */
 .star-rating {
   margin-top: 5px;
+  margin-right: 10px;
   font-size: 0;
   white-space: nowrap;
   display: inline-block;

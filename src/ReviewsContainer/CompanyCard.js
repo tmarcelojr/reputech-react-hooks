@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import StarRatings from 'react-star-ratings'
 import CompanyUserReviews from './CompanyUserReviews'
 import AddUserReview from './AddUserReview'
+import EditUserReview from './EditUserReview'
+import UserContext from '../Contexts/UserContext'
 import { FcComments } from "react-icons/fc";
 
 const CompanyCard = ({
@@ -10,9 +12,15 @@ const CompanyCard = ({
   websiteLogo, 
   companyWebsite,
   averageCompanyRatings, 
-  averageCompanyUserRatings,
-  updateReviews
+  averageCompanyUserRatings
 }) => {
+
+  const user = useContext(UserContext)
+  const [editReview, setEditReview] = useState()
+  
+  const cancelEditReview = () => {
+    setEditReview()
+  }
 
   return(
     <div className='company-card'>
@@ -85,8 +93,30 @@ const CompanyCard = ({
                   </button>
                 </div>
                 <div className="modal-body">
-                  <AddUserReview companyId={companyId} />
-                  <CompanyUserReviews companyId={companyId} />
+                  {
+                    user.user !== null && editReview === undefined
+                    ? <AddUserReview companyId={companyId} />
+                    : null
+                  }
+                  {
+                    editReview === undefined
+                    ?
+                    <CompanyUserReviews 
+                      companyId={companyId} 
+                      editReview={(values) => setEditReview(values)}
+                    />
+                    : null
+                  }
+                  {
+                    editReview !== undefined
+                    ? 
+                    <EditUserReview 
+                      companyValues={editReview}
+                      cancelReview={() => cancelEditReview()}
+                    />
+                    : null
+                  }
+              
                 </div> {/* modal-body */}
               </div> {/* modal-content */}
             </div> {/* modal-dialog */}

@@ -57,13 +57,28 @@ const CompanyUserReviews = (props) => {
                           <h5 className='card-title'>{review.title}</h5>
                           <p>{review.content}</p>
                           {review.creator.username}
+                          {review.id}
                           {
                             review.creator.username === userContext.user
-                            ? <button 
+                            ?
+                            <div>
+                              <button 
                                 onClick={() => deleteReview(review.id)}
                               >
                                 Delete
                               </button>
+                              <button 
+                                onClick={() => props.editReview({
+                                  title: review.title,
+                                  content: review.content,
+                                  stars: review.stars,
+                                  id: review.id
+                                }
+                                )}
+                              >
+                                Edit
+                              </button>
+                            </div>
                             : null
                           }
                         </div> {/* card-header */}
