@@ -112,7 +112,7 @@ const CompanyCard = ({
                 </div>
                 <div className="modal-body text-right">
                   {
-                    editReview !== undefined || addReview === true
+                    user.user === null
                     ? null
                     :
                     <button 
