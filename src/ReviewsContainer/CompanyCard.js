@@ -30,9 +30,9 @@ const CompanyCard = ({
         </div> { /* col-md-2 */ }
         <div className='col-md-8 text-left'>
           <div className='card-body'>
-            <button className='card-title'>
+            <div className='card-title'>
               <strong>{companyName}</strong>
-            </button> {/* card-title */}
+            </div> {/* card-title */}
             <div id='star_container'>
               <div className='star-line'>
                 <div>
@@ -101,9 +101,9 @@ const CompanyCard = ({
           </div>
 
           {/* <!-- Modal --> */}
-          <div className="modal fade" id={'a' + String(companyId)} tabIndex="-1" role="dialog" aria-labelledby={'a' + String(companyId)} aria-hidden="true" >
-            <div className="modal-dialog" role="document">
-              <div className="modal-content"  style={{ width: '50rem' }}>
+          <div className="modal fade" id={'a' + String(companyId)} tabIndex="-1" role="dialog" aria-labelledby={'a' + String(companyId)} aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered" role="document">
+              <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="exampleModalLabel">{companyName} Reviews</h5>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close">

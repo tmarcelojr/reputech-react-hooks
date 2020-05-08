@@ -2,6 +2,8 @@ import React, { useContext } from 'react'
 import StarRatings from 'react-star-ratings'
 import CompanyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
 import UserContext from '../Contexts/UserContext'
+import { BsPencil } from 'react-icons/bs'
+import { FcFullTrash } from 'react-icons/fc'
 
 const CompanyUserReviews = (props) => {
   const reviews = useContext(CompanyUserReviewsContext)
@@ -34,7 +36,10 @@ const CompanyUserReviews = (props) => {
           return(
             <div key={i}>
             {
-              companyReviews.map((review, j)=> {
+              companyReviews.reverse().map((review, j)=> {
+                let dateString = review.created_on
+                dateString = new Date(dateString).toUTCString();
+                dateString = dateString.split(' ').slice(1, 4).reverse().join('-');
                 return(
                   <div key={j}>
                   {
@@ -47,41 +52,52 @@ const CompanyUserReviews = (props) => {
                       style={{ maxWidth: '100% '}}
                       >
                         <div className='card-header'>
-                          <StarRatings 
-                            rating={review.stars}
-                            starRatedColor='crimson'
-                            numberOfStars={5}
-                            starDimension='20px'
-                            name='rating'
-                          />
+                          <div className='user-review-buttons'>
+                            <div className='mr-auto'>
+                              <StarRatings 
+                                rating={review.stars}
+                                starRatedColor='crimson'
+                                numberOfStars={5}
+                                starDimension='20px'
+                                name='rating'
+                              />
+                            </div>
+
+                          {/* Buttons for Edit and Delete */}
+                          <div className='ml-auto'>
+                            {
+                              review.creator.username === userContext.user
+                              ?
+                              <div>
+                                <button 
+                                  onClick={() => props.editReview({
+                                    title: review.title,
+                                    content: review.content,
+                                    stars: review.stars,
+                                    id: review.id
+                                  }
+                                  )}
+                                  className='review-button'
+                                >
+                                  <BsPencil />
+                                </button>
+                                <button 
+                                  onClick={() => deleteReview(review.id)}
+                                  className='review-button'
+                                >
+                                  <FcFullTrash />
+                                </button>
+                              </div>
+                              : null
+                            }
+                          </div>
+
+                          </div>
                           <span>
                             <h5 className='card-title'>{review.title}</h5>
-                            <i>by: {review.creator.username}</i>
+                            <i>{dateString}</i>
+                            <p><i>by: {review.creator.username}</i></p>      
                           </span>
-                
-                          {
-                            review.creator.username === userContext.user
-                            ?
-                            <div>
-                              <button 
-                                onClick={() => deleteReview(review.id)}
-                              >
-                                Delete
-                              </button>
-                              <button 
-                                onClick={() => props.editReview({
-                                  title: review.title,
-                                  content: review.content,
-                                  stars: review.stars,
-                                  id: review.id
-                                }
-                                )}
-                              >
-                                Edit
-                              </button>
-                            </div>
-                            : null
-                          }
                         </div> {/* card-header */}
                         <div className='reviews-list'>
                           "{review.content}"

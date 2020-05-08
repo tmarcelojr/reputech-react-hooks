@@ -22,6 +22,7 @@ const AddUserReview = (props) => {
       if(createReviewRes.status === 201) {
         console.log('Successfully added review', createReviewJson)
         reviews.unorganizedUserReviews.setUserReviews(userReviews => [...userReviews, createReviewJson.data])
+        props.cancelReview()
       }
     } catch(err) {
       console.log(err);
