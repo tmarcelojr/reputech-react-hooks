@@ -1,12 +1,10 @@
 import React, { useContext } from 'react'
-import UserContext from '../Contexts/UserContext'
 
 export default function Home() {
-  const user = useContext(UserContext)
   return(
     <div className='py-5'>
       <h2>Home</h2>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
+      <p>Welcome to RepuTech. A place where you can find the best company for you. Reviews are collected from the internet and compared with registered RepuTech users.</p>
     </div>
   )
 }
