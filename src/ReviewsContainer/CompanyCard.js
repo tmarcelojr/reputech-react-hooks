@@ -12,13 +12,13 @@ const CompanyCard = ({
   websiteLogo, 
   companyWebsite,
   averageCompanyRatings, 
-  averageCompanyUserRatings
+  averageCompanyUserRatings,
+  addToFavorites
 }) => {
 
   const user = useContext(UserContext)
   const [editReview, setEditReview] = useState()
   const [addReview, setAddReview] = useState(false)
-  const [favorite, setFavorite] = useState(false)
 
   return(
     <div className='company-card'>
@@ -81,8 +81,11 @@ const CompanyCard = ({
             <FcComments />
           </button>
           
-          <div id="hover" onClick={() => favorite === true ? setFavorite(false) : setFavorite(true)}>
-            {
+          <div id="hover" onClick={() => addToFavorites()}>
+
+            {/* () => favorite === true ? setFavorite(false) : setFavorite(true)) */}
+
+            {/* {
               favorite === false
               ?
               <button 
@@ -96,7 +99,8 @@ const CompanyCard = ({
               >
                 <FcLike />
               </button>
-            }
+            } */}
+            test
             <div id="popup"><i>Favorites is coming soon...</i></div> 
           </div>
 

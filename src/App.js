@@ -12,6 +12,7 @@ import './App.css'
 // Components
 import Home from './Home'
 import ReviewsContainer from './ReviewsContainer'
+import FavoritesContainer from './FavoritesContainer'
 // Contexts
 import UserContext from './Contexts/UserContext'
 import LoadingContext from './Contexts/LoadingContext'
@@ -139,6 +140,29 @@ export default function App() {
     findUserAverageRatings()
   }, [organizedReviews])
 
+  //Add Favorite
+  const addFavorite = async (id) => {
+
+    console.log('we are in addfavorite in app.js', id)
+    console.log('we are in addfavorite in app.js current user', user)
+    const companyId = id.toString()
+    try{
+      const addFavoriteRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites/' + companyId, {
+          credentials: 'include',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+      })
+      const addFavoriteJson = await addFavoriteRes.json()
+      if(addFavoriteRes.status === 201) {
+        console.log('Successfully add to favorites', addFavoriteJson)
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   // =============== AUTH ===============
   const checkLoginStatus = async () => {
     try{
@@ -192,6 +216,9 @@ export default function App() {
             </li>
             <li className='nav-item'>
               <Link className='nav-link' to='/reviews'>Reviews</Link>
+            </li>
+            <li className='nav-item'>
+              <Link className='nav-link' to='/favorites'>Favorites</Link>
             </li>
           </ul>
           <ul className='navbar-nav ml-auto px-3'>
@@ -264,12 +291,13 @@ export default function App() {
               <CompanyRatings.Provider value={{companyAverageRatings, companyAverageUserRatings}}>
                 <CompanyUserReviewsContext.Provider value={{companyUserReviews, unorganizedUserReviews}}>
                   <Route exact path='/reviews'>
-                    <ReviewsContainer />
+                    {/* <ReviewsContainer companyToAdd={(data) => setFavorites([...favorites, data])}/> */}
+                    <ReviewsContainer companyToAdd={(id) => addFavorite(id)}/>
                   </Route>
+                  <Route exact path='/favorites'>
+                    <FavoritesContainer />
+                  </Route>   
                 </CompanyUserReviewsContext.Provider>
-                <Route exact path='/favorites'>
-                  {/* {Currently do not have a favorites section} */}
-                </Route>   
               </CompanyRatings.Provider>
             </CompanyContext.Provider>
             {/* { /Components needing company information, ratings, and reviews } */}
