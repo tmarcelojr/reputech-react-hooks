@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import CompanyCard from '../ReviewsContainer/CompanyCard'
 import CompanyRatings from '../Contexts/CompanyRatings'
 
-const FavoritesContainer = () => {
+const FavoritesContainer = ({companyToRemove}) => {
   // Get Favorites
   useEffect(() => {
     async function getFavorites() {
@@ -36,6 +36,7 @@ const FavoritesContainer = () => {
               companyName={companyInfo.company.name}
               averageCompanyRatings={ratings.companyAverageRatings.averageRatings[i]}
               averageCompanyUserRatings={ratings.companyAverageUserRatings.companyUserRatings[i]}
+              removeFromFavorites={() => companyToRemove(companyInfo.id)}
             />
           )
         })

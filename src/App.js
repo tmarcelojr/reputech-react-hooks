@@ -316,7 +316,7 @@ export default function App() {
                     />
                   </Route>
                   <Route exact path='/favorites'>
-                    <FavoritesContainer />
+                    <FavoritesContainer companyToRemove={(id) => removeFavorite(id)}/>
                   </Route>   
                 </CompanyUserReviewsContext.Provider>
               </CompanyRatings.Provider>
