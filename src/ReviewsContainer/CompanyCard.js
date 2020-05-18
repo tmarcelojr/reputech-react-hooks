@@ -13,12 +13,14 @@ const CompanyCard = ({
   companyWebsite,
   averageCompanyRatings, 
   averageCompanyUserRatings,
-  addToFavorites
+  addToFavorites,
+  removeFromFavorites
 }) => {
 
   const user = useContext(UserContext)
   const [editReview, setEditReview] = useState()
   const [addReview, setAddReview] = useState(false)
+  const [favorite, setFavorite] = useState(false)
 
   return(
     <div className='company-card'>
@@ -81,11 +83,14 @@ const CompanyCard = ({
             <FcComments />
           </button>
           
-          <div id="hover" onClick={() => addToFavorites()}>
-
-            {/* () => favorite === true ? setFavorite(false) : setFavorite(true)) */}
-
-            {/* {
+          <div onClick={() => 
+            favorite === true 
+            ? 
+            setFavorite(false)
+            :
+            (addToFavorites(), setFavorite(true))
+            }>
+            {
               favorite === false
               ?
               <button 
@@ -99,10 +104,10 @@ const CompanyCard = ({
               >
                 <FcLike />
               </button>
-            } */}
-            test
-            <div id="popup"><i>Favorites is coming soon...</i></div> 
+            }
           </div>
+
+          <div><button onClick={() => removeFromFavorites()}>delete</button></div>
 
           {/* <!-- Modal --> */}
           <div className="modal fade" id={'a' + String(companyId)} tabIndex="-1" role="dialog" aria-labelledby={'a' + String(companyId)} aria-hidden="true">

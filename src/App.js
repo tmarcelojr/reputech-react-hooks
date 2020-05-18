@@ -142,9 +142,6 @@ export default function App() {
 
   //Add Favorite
   const addFavorite = async (id) => {
-
-    console.log('we are in addfavorite in app.js', id)
-    console.log('we are in addfavorite in app.js current user', user)
     const companyId = id.toString()
     try{
       const addFavoriteRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites/' + companyId, {
@@ -162,6 +159,27 @@ export default function App() {
       console.log(err);
     }
   }
+
+  // Remove Favorite
+  const removeFavorite = async (id) => {
+    const companyId = id.toString()
+    try{
+      const removeFavoriteRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites/' + companyId, {
+          credentials: 'include',
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+      })
+      const removeFavoriteJson = await removeFavoriteRes.json()
+      if(removeFavoriteRes.status === 201) {
+        console.log('Successfully removed from favorites', removeFavoriteJson)
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
 
   // =============== AUTH ===============
   const checkLoginStatus = async () => {
@@ -292,7 +310,10 @@ export default function App() {
                 <CompanyUserReviewsContext.Provider value={{companyUserReviews, unorganizedUserReviews}}>
                   <Route exact path='/reviews'>
                     {/* <ReviewsContainer companyToAdd={(data) => setFavorites([...favorites, data])}/> */}
-                    <ReviewsContainer companyToAdd={(id) => addFavorite(id)}/>
+                    <ReviewsContainer 
+                      companyToAdd={(id) => addFavorite(id)}
+                      companyToRemove={(id) => removeFavorite(id)}
+                    />
                   </Route>
                   <Route exact path='/favorites'>
                     <FavoritesContainer />

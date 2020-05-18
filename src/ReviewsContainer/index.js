@@ -6,7 +6,7 @@ import CompanyCard from './CompanyCard'
 import './custom.css'
 
 
-export default function ReviewsContainer({companyToAdd}) {
+export default function ReviewsContainer(props) {
   // Loading
   const loading = useContext(LoadingContext)
   // Company data
@@ -29,7 +29,8 @@ export default function ReviewsContainer({companyToAdd}) {
               companyName={companyInfo.name}
               averageCompanyRatings={ratings.companyAverageRatings.averageRatings[i]}
               averageCompanyUserRatings={ratings.companyAverageUserRatings.companyUserRatings[i]}
-              addToFavorites={() => companyToAdd(companyInfo.id)}
+              addToFavorites={() => props.companyToAdd(companyInfo.id)}
+              removeFromFavorites={() => props.companyToRemove(companyInfo.id)}
             />
           )
         })

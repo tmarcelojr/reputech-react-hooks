@@ -21,16 +21,12 @@ const FavoritesContainer = () => {
   // Company ratings
   const ratings = useContext(CompanyRatings)
 
-
-  // favorites.forEach((favorite) => console.log(favorite.id))
-
   return(
     <div className='my-5 py-5'>
       {
         favorites.length !== null
         ?
         favorites.map((companyInfo, i) => {
-          console.log('we are inside favorites map', companyInfo.company)
           return(
             <CompanyCard
               key={i}
