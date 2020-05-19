@@ -44,9 +44,12 @@ export default function App() {
   // Company Ratings
   const [averageRatings, setAverageRatings] = useState([])
   const companyAverageRatings = useMemo(() => ({ averageRatings, setAverageRatings }), [averageRatings, setAverageRatings])
-  // Company Ratings
+  // User Favorites
   const [favorites, setFavorites] = useState([])
   const userFavorites = useMemo(() => ({ favorites, setFavorites }), [favorites, setFavorites])
+  // Set Favorites Icon
+  const [favoritesIcon, setFavoritesIcon] = useState([])
+  const favoritesIconValue = useMemo(() => ({ favoritesIcon, setFavoritesIcon }), [favoritesIcon, setFavoritesIcon])
 
   // =============== FETCH CALLS ===============
 
@@ -328,7 +331,12 @@ export default function App() {
             {/* { Components that need company information, ratings, and reviews } */}
             <CompanyContext.Provider value={companyValues}>
               <CompanyRatings.Provider value={{companyAverageRatings, companyAverageUserRatings}}>
-                <CompanyUserReviewsContext.Provider value={{companyUserReviews, unorganizedUserReviews, userFavorites}}>
+                <CompanyUserReviewsContext.Provider value={{
+                  companyUserReviews, 
+                  unorganizedUserReviews, 
+                  userFavorites,
+                  favoritesIconValue
+                  }}>
                   <Route exact path='/reviews'>
                     {/* <ReviewsContainer companyToAdd={(data) => setFavorites([...favorites, data])}/> */}
                     <ReviewsContainer 

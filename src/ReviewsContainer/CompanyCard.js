@@ -4,7 +4,9 @@ import CompanyUserReviews from './CompanyUserReviews'
 import AddUserReview from './AddUserReview'
 import EditUserReview from './EditUserReview'
 import UserContext from '../Contexts/UserContext'
+import CompanyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
 import { FcComments, FcLike, FcLikePlaceholder } from "react-icons/fc";
+import LoadingContext from '../Contexts/LoadingContext'
 
 const CompanyCard = ({
   companyId,
@@ -20,9 +22,9 @@ const CompanyCard = ({
   const user = useContext(UserContext)
   const [editReview, setEditReview] = useState()
   const [addReview, setAddReview] = useState(false)
-  const [favorite, setFavorite] = useState(false)
+  const favorites = useContext(CompanyUserReviewsContext)
 
-  // console.log(favorites.userFavorites)
+  // console.log(favorites.favoritesIconValue)
 
   return(
     <div className='company-card'>
@@ -86,14 +88,62 @@ const CompanyCard = ({
           </button>
           
           <div onClick={() => 
-            favorite === true 
+            favorites.favoritesIconValue.favoritesIcon === true 
             ? 
-            setFavorite(false)
+            (removeFromFavorites())
             :
-            (addToFavorites(), setFavorite(true))
+            (addToFavorites())
             }>
+            
+
+            {/* Goal: is if the company card is favorited, it will show in the favorite list as favorited as weell as in the reviews section. I think a way I can do this is by iterating over the favorites list and  making a conditional for the heart to render properly in reviews secton and in favorites section. */}
             {
-              favorite === false
+              // favorites.userFavorites.favorites.forEach(favorite => {
+              //   return(
+              //     <div>
+              //     {
+              //       favorite.id === companyId
+              //       ?
+              //       <button 
+              //         className='company-reviews-button'
+              //       >
+              //         <FcLike />
+              //       </button>
+              //       :
+              //       <button 
+              //         className='company-reviews-button'
+              //       >
+              //         <FcLikePlaceholder />
+              //       </button>
+              //     }
+              //     </div>
+              //   )
+              // })
+
+
+
+
+
+
+              // favorites.userFavorites.favorites.map((favorited, i) => {
+              //   return(
+              //     <div>
+              //   )
+              //   if(companyId === favorited.id) {
+              //     return(
+              //       <button
+              //         key={i}
+              //         className='company-reviews-button'
+              //       >
+              //         <FcLike />
+              //       </button>
+              //     )
+              //   }
+              // })
+            }
+
+             {
+              favorites.favoritesIconValue.favoritesIcon === false
               ?
               <button 
                 className='company-reviews-button'
@@ -108,8 +158,6 @@ const CompanyCard = ({
               </button>
             }
           </div>
-
-          <div><button onClick={() => removeFromFavorites()}>delete</button></div>
 
           {/* <!-- Modal --> */}
           <div className="modal fade" id={'a' + String(companyId)} tabIndex="-1" role="dialog" aria-labelledby={'a' + String(companyId)} aria-hidden="true">
