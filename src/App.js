@@ -44,6 +44,9 @@ export default function App() {
   // Company Ratings
   const [averageRatings, setAverageRatings] = useState([])
   const companyAverageRatings = useMemo(() => ({ averageRatings, setAverageRatings }), [averageRatings, setAverageRatings])
+  // Company Ratings
+  const [favorites, setFavorites] = useState([])
+  const userFavorites = useMemo(() => ({ favorites, setFavorites }), [favorites, setFavorites])
 
   // =============== FETCH CALLS ===============
 
@@ -83,9 +86,20 @@ export default function App() {
       }
     }
 
+    async function getFavorites() {
+      try{
+        const favoritesRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites/')
+        const favoritesJson = await favoritesRes.json()
+        setFavorites(favoritesJson.data)
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
     getCompanyData()
     getCompanyReviews()
     getRatings()
+    getFavorites()
     checkLoginStatus()
   }, [])
 
@@ -153,7 +167,8 @@ export default function App() {
       })
       const addFavoriteJson = await addFavoriteRes.json()
       if(addFavoriteRes.status === 201) {
-        console.log('Successfully add to favorites', addFavoriteJson)
+        console.log('Successfully add to favorites', addFavoriteJson.data.id)
+        // setFavorites(...favorites, addFavoriteJson.data)
       }
     } catch(err) {
       console.log(err);
@@ -307,7 +322,7 @@ export default function App() {
             {/* { Components that need company information, ratings, and reviews } */}
             <CompanyContext.Provider value={companyValues}>
               <CompanyRatings.Provider value={{companyAverageRatings, companyAverageUserRatings}}>
-                <CompanyUserReviewsContext.Provider value={{companyUserReviews, unorganizedUserReviews}}>
+                <CompanyUserReviewsContext.Provider value={{companyUserReviews, unorganizedUserReviews, userFavorites}}>
                   <Route exact path='/reviews'>
                     {/* <ReviewsContainer companyToAdd={(data) => setFavorites([...favorites, data])}/> */}
                     <ReviewsContainer 

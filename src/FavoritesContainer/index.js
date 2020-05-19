@@ -1,25 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import CompanyCard from '../ReviewsContainer/CompanyCard'
 import CompanyRatings from '../Contexts/CompanyRatings'
+import UserFavorites from '../Contexts/UserFavorites'
 
 const FavoritesContainer = ({companyToRemove}) => {
-  // Get Favorites
-  useEffect(() => {
-    async function getFavorites() {
-      try{
-        const favoritesRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites/')
-        const favoritesJson = await favoritesRes.json()
-        setFavorites(favoritesJson.data)
-      } catch(err) {
-        console.log(err);
-      }
-    }
-    getFavorites()
-  }, [])
-
-  const [favorites, setFavorites] = useState([])
   // Company ratings
   const ratings = useContext(CompanyRatings)
+  // User Favorites
+  const favorites = useContext(UserFavorites)
 
   return(
     <div className='my-5 py-5'>

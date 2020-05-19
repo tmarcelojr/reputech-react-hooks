@@ -4,6 +4,7 @@ import CompanyUserReviews from './CompanyUserReviews'
 import AddUserReview from './AddUserReview'
 import EditUserReview from './EditUserReview'
 import UserContext from '../Contexts/UserContext'
+import ComapnyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
 import { FcComments, FcLike, FcLikePlaceholder } from "react-icons/fc";
 
 const CompanyCard = ({
@@ -18,9 +19,12 @@ const CompanyCard = ({
 }) => {
 
   const user = useContext(UserContext)
+  const favorites = useContext(ComapnyUserReviewsContext)
   const [editReview, setEditReview] = useState()
   const [addReview, setAddReview] = useState(false)
   const [favorite, setFavorite] = useState(false)
+
+  // console.log(favorites.userFavorites)
 
   return(
     <div className='company-card'>
