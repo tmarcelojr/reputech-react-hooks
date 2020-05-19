@@ -1,20 +1,23 @@
 import React, { useContext } from 'react'
 import CompanyCard from '../ReviewsContainer/CompanyCard'
 import CompanyRatings from '../Contexts/CompanyRatings'
-import UserFavorites from '../Contexts/UserFavorites'
+import CompanyUserReviewsContext from '../Contexts/CompanyUserReviewsContext'
+import LoadingContext from '../Contexts/LoadingContext'
 
 const FavoritesContainer = ({companyToRemove}) => {
   // Company ratings
   const ratings = useContext(CompanyRatings)
   // User Favorites
-  const favorites = useContext(UserFavorites)
+  const favorites = useContext(CompanyUserReviewsContext)
+  // Loading
+  const loading = useContext(LoadingContext)
 
   return(
     <div className='my-5 py-5'>
       {
-        favorites.length !== null
+        loading.isLoading === false
         ?
-        favorites.map((companyInfo, i) => {
+        favorites.userFavorites.favorites.map((companyInfo, i) => {
           return(
             <CompanyCard
               key={i}

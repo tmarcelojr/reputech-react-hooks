@@ -80,17 +80,6 @@ export default function App() {
           return companyRatings.push(Math.round(ratings[1] * 2/2))
         })
         setAverageRatings(companyRatings)
-        setIsLoading(false)
-      } catch(err) {
-        console.log(err);
-      }
-    }
-
-    async function getFavorites() {
-      try{
-        const favoritesRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites/')
-        const favoritesJson = await favoritesRes.json()
-        setFavorites(favoritesJson.data)
       } catch(err) {
         console.log(err);
       }
@@ -99,7 +88,6 @@ export default function App() {
     getCompanyData()
     getCompanyReviews()
     getRatings()
-    getFavorites()
     checkLoginStatus()
   }, [])
 
@@ -154,6 +142,23 @@ export default function App() {
     findUserAverageRatings()
   }, [organizedReviews])
 
+  // =============== FAVORITES ===============
+  // Get Favorites
+  useEffect(() => {
+    async function getFavorites() {
+      try{
+        const favoritesRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites/')
+        const favoritesJson = await favoritesRes.json()
+        console.log('we are in getfavorites, favoritesJson.data', favoritesJson.data)
+        setFavorites(favoritesJson.data)
+        setIsLoading(false)
+      } catch(err) {
+        console.log(err);
+      }
+    }
+    getFavorites()
+  }, [])
+
   //Add Favorite
   const addFavorite = async (id) => {
     const companyId = id.toString()
@@ -167,16 +172,16 @@ export default function App() {
       })
       const addFavoriteJson = await addFavoriteRes.json()
       if(addFavoriteRes.status === 201) {
-        console.log('Successfully add to favorites', addFavoriteJson.data.id)
-        // setFavorites(...favorites, addFavoriteJson.data)
+        console.log('Successfully add to favorites', addFavoriteJson.data)
+        setFavorites([...favorites, addFavoriteJson.data])
       }
     } catch(err) {
       console.log(err);
     }
   }
 
-  // Remove Favorite
-  const removeFavorite = async (id) => {
+   // Remove Favorite
+   const removeFavorite = async (id) => {
     const companyId = id.toString()
     try{
       const removeFavoriteRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites/' + companyId, {
@@ -187,14 +192,15 @@ export default function App() {
           }
       })
       const removeFavoriteJson = await removeFavoriteRes.json()
-      if(removeFavoriteRes.status === 201) {
+      if(removeFavoriteRes.status === 200) {
         console.log('Successfully removed from favorites', removeFavoriteJson)
+        const newFavoritesArr = favorites.filter(favorite => favorite.id !== id)
+        setFavorites(newFavoritesArr) 
       }
     } catch(err) {
       console.log(err);
     }
   }
-
 
   // =============== AUTH ===============
   const checkLoginStatus = async () => {
