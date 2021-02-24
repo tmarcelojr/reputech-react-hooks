@@ -57,7 +57,7 @@ export default function App() {
   useEffect(() => {
     async function getCompanyData() {
       try{
-        const companyDataRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/companies/')
+        const companyDataRes = await fetch(process.env.REACT_APP_API_URL + 'api/v1/companies/')
         const companyDataJson = await companyDataRes.json()
         setCompanyData(companyDataJson.data)
       } catch(err) {
@@ -67,7 +67,7 @@ export default function App() {
 
     async function getCompanyReviews() {
       try{
-        const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/')
+        const reviewsRes = await fetch(process.env.REACT_APP_API_URL + 'api/v1/reviews/')
         const reviewsJson = await reviewsRes.json()
         setUserReviews(reviewsJson.data)
       } catch(err) {
@@ -77,7 +77,7 @@ export default function App() {
     
     async function getRatings() {
       try{
-        const ratingRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/collected_reviews/')
+        const ratingRes = await fetch(process.env.REACT_APP_API_URL + 'api/v1/collected_reviews/')
         const ratingJson = await ratingRes.json()
         let companyRatings = []
         ratingJson.data.map(ratings => {
