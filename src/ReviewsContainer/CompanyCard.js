@@ -22,9 +22,12 @@ const CompanyCard = ({
   const user = useContext(UserContext)
   const [editReview, setEditReview] = useState()
   const [addReview, setAddReview] = useState(false)
+  const [favoritesIcon, setFavoritesIcon] = useState(false)
   const favorites = useContext(CompanyUserReviewsContext)
 
-  // console.log(favorites.favoritesIconValue)
+  // console.log(favorites.favoritesIconValue.favoritesIcon)
+
+  // console.log(favorites.userFavorites.favorites)
 
   return(
     <div className='company-card'>
@@ -86,63 +89,61 @@ const CompanyCard = ({
           >
             <FcComments />
           </button>
+
+
+
+      
           
-          <div onClick={() => 
-            favorites.favoritesIconValue.favoritesIcon === true 
+          {/* <div onClick={() => 
+            favoritesIcon === true 
             ? 
-            (removeFromFavorites())
+            (setFavoritesIcon(false))
             :
-            (addToFavorites())
-            }>
-            
+            (setFavoritesIcon(true))
+            }> */}
+
+            {/* <div>             */}
 
             {/* Goal: is if the company card is favorited, it will show in the favorite list as favorited as weell as in the reviews section. I think a way I can do this is by iterating over the favorites list and  making a conditional for the heart to render properly in reviews secton and in favorites section. */}
+
+
             {
-              // favorites.userFavorites.favorites.forEach(favorite => {
-              //   return(
-              //     <div>
-              //     {
-              //       favorite.id === companyId
-              //       ?
-              //       <button 
-              //         className='company-reviews-button'
-              //       >
-              //         <FcLike />
-              //       </button>
-              //       :
-              //       <button 
-              //         className='company-reviews-button'
-              //       >
-              //         <FcLikePlaceholder />
-              //       </button>
-              //     }
-              //     </div>
-              //   )
+              // favoritesIcon === true
+              // ? 
+              // favorites.userFavorites.favorites.map(favorited => {
+                
               // })
-
-
-
-
-
-
-              // favorites.userFavorites.favorites.map((favorited, i) => {
-              //   return(
-              //     <div>
-              //   )
-              //   if(companyId === favorited.id) {
-              //     return(
-              //       <button
-              //         key={i}
-              //         className='company-reviews-button'
-              //       >
-              //         <FcLike />
-              //       </button>
-              //     )
-              //   }
-              // })
+              // : console.log('false')
             }
 
-             {
+            {/* {
+              favoritesIcon === true
+              ?
+              favorites.userFavorites.favorites.map(favorited => {
+                if(favorited.id === companyId) {
+                  return(
+                    <button 
+                      className='company-reviews-button'
+                      onClick={() => setFavoritesIcon(false)}
+                    >
+                      <FcLike />
+                    </button>
+                  )
+                }
+              }
+              : 
+              <button 
+                className='company-reviews-button'
+                onClick={() => setFavoritesIcon(true)}
+              >
+                <FcLikePlaceholder />
+              </button>
+            } */}
+
+
+
+
+             {/* {
               favorites.favoritesIconValue.favoritesIcon === false
               ?
               <button 
@@ -156,8 +157,25 @@ const CompanyCard = ({
               >
                 <FcLike />
               </button>
-            }
-          </div>
+            } */}
+
+            {/* {
+              favoritesIcon === true
+              ?
+              <button 
+                className='company-reviews-button'
+              >
+                <FcLike />
+              </button>
+              :
+              <button 
+                className='company-reviews-button'
+              >
+                <FcLikePlaceholder />
+              </button>
+            } */}
+
+          {/* </div> */}
 
           {/* <!-- Modal --> */}
           <div className="modal fade" id={'a' + String(companyId)} tabIndex="-1" role="dialog" aria-labelledby={'a' + String(companyId)} aria-hidden="true">

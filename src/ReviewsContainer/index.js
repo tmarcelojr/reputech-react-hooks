@@ -13,7 +13,6 @@ export default function ReviewsContainer(props) {
   const company = useContext(CompanyContext)
   // Company ratings
   const ratings = useContext(CompanyRatings)
-
   return(
     <div className='my-5 company-card-container'>
       {

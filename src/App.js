@@ -22,6 +22,7 @@ import CompanyUserReviewsContext from './Contexts/CompanyUserReviewsContext'
 import LoginRegisterModal from './LoginRegisterModal'
 
 export default function App() {
+
   // Logged in user
   const [user, setUser] = useState(null)
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser])
