@@ -67,13 +67,7 @@ export default function App() {
 
     async function getCompanyReviews() {
       try{
-        const reviewsRes = await fetch('https://reputech-python.herokuapp.com/api/v1/reviews', {
-          credentials: 'include',
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        const reviewsRes = await fetch('https://afternoon-citadel-36416.herokuapp.com/https://reputech-python.herokuapp.com/api/v1/reviews')
         const reviewsJson = await reviewsRes.json()
         setUserReviews(reviewsJson.data)
       } catch(err) {
