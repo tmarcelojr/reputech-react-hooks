@@ -69,10 +69,11 @@ export default function App() {
       try{
         const reviewsRes = await fetch('https://reputech-python.herokuapp.com/api/v1/reviews', {
           credentials: 'include',
-          method: 'GET',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json'
-          })
+          }
+        })
         const reviewsJson = await reviewsRes.json()
         setUserReviews(reviewsJson.data)
       } catch(err) {
