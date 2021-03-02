@@ -211,6 +211,7 @@ export default function App() {
     try{
       const checkLoginRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/logged_in')
       const checkLoginJson = await checkLoginRes.json()
+      console.log(checkLoginJson)
       if(checkLoginRes.status === 200 ) {
        // Set user here to check logged in user with server
        setUser(checkLoginJson.data.username)
