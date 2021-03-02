@@ -209,7 +209,7 @@ export default function App() {
   // =============== AUTH ===============
   const checkLoginStatus = async () => {
     try{
-      const checkLoginRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/logged_in', {
+      const checkLoginRes = await fetch(process.env.REACT_APP_API_URL + 'api/v1/users/logged_in', {
           credentials: 'include',
           method: 'GET',
           headers: {
