@@ -9,7 +9,6 @@ const LoginRegisterModal = (props) => {
   const [switchForm, setSwitchForm] = useState('login')
 
   const login = async (values) => {
-    console.log('We are logging in...')
     try{
       const loginRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/login', {
         credentials: 'include',
