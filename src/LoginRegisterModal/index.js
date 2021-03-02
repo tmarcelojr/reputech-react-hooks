@@ -34,8 +34,7 @@ const LoginRegisterModal = (props) => {
 
   const register = async (values) => {
     try {
-      const registerRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/register/', {
-        credentials: 'include',
+      const registerRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/register', {
         method: 'POST',
         body: JSON.stringify(values),
         headers: {
