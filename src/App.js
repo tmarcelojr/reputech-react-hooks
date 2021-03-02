@@ -57,7 +57,7 @@ export default function App() {
   useEffect(() => {
     async function getCompanyData() {
       try{
-        const companyDataRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/companies')
+        const companyDataRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/companies/')
         const companyDataJson = await companyDataRes.json()
         setCompanyData(companyDataJson.data)
       } catch(err) {
@@ -67,7 +67,7 @@ export default function App() {
 
     async function getCompanyReviews() {
       try{
-        const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews')
+        const reviewsRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/reviews/')
         const reviewsJson = await reviewsRes.json()
         setUserReviews(reviewsJson.data)
       } catch(err) {
@@ -77,7 +77,7 @@ export default function App() {
     
     async function getRatings() {
       try{
-        const ratingRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/collected_reviews')
+        const ratingRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/collected_reviews/')
         const ratingJson = await ratingRes.json()
         let companyRatings = []
         ratingJson.data.map(ratings => {
@@ -151,7 +151,7 @@ export default function App() {
   useEffect(() => {
     async function getFavorites() {
       try{
-        const favoritesRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites')
+        const favoritesRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites/')
         const favoritesJson = await favoritesRes.json()
         console.log('we are in getfavorites, favoritesJson.data', favoritesJson.data)
         setFavorites(favoritesJson.data)
@@ -167,7 +167,7 @@ export default function App() {
   const addFavorite = async (id) => {
     const companyId = id.toString()
     try{
-      const addFavoriteRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites' + companyId, {
+      const addFavoriteRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites/' + companyId, {
           credentials: 'include',
           method: 'POST',
           headers: {
@@ -188,7 +188,7 @@ export default function App() {
    const removeFavorite = async (id) => {
     const companyId = id.toString()
     try{
-      const removeFavoriteRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites' + companyId, {
+      const removeFavoriteRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites/' + companyId, {
           credentials: 'include',
           method: 'DELETE',
           headers: {
@@ -209,7 +209,7 @@ export default function App() {
   // =============== AUTH ===============
   const checkLoginStatus = async () => {
     try{
-      const checkLoginRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/logged_in', {
+      const checkLoginRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/logged_in/', {
           credentials: 'include',
           method: 'GET',
           headers: {
@@ -229,7 +229,7 @@ export default function App() {
 
   const logout = async () => {
     try {
-      const logoutRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/logout', {
+      const logoutRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/logout/', {
           credentials: 'include',
           method: 'GET',
           headers: {
