@@ -229,7 +229,7 @@ export default function App() {
 
   const logout = async () => {
     try {
-      const logoutRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/logout/', {
+      const logoutRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/logout', {
           credentials: 'include',
           method: 'GET',
           headers: {
