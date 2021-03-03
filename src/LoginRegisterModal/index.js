@@ -10,7 +10,7 @@ const LoginRegisterModal = (props) => {
 
   const login = async (values) => {
     try{
-      const loginRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/login', {
+      const loginRes = await fetch('https://reputech-python.herokuapp.com/api/v1/users/login', {
         credentials: 'include',
         method: 'POST',
         body: JSON.stringify(values),
@@ -35,7 +35,7 @@ const LoginRegisterModal = (props) => {
 
   const register = async (values) => {
     try {
-      const registerRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/register', {
+      const registerRes = await fetch('https://reputech-python.herokuapp.com/api/v1/users/register', {
         method: 'POST',
         body: JSON.stringify(values),
         headers: {
