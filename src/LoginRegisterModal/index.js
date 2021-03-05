@@ -11,7 +11,7 @@ const LoginRegisterModal = (props) => {
   const login = async (values) => {
     try{
       const loginRes = await fetch('https://reputech-python.herokuapp.com/api/v1/users/login', {
-        credentials: 'include',
+        credentials: 'same-origin',
         method: 'POST',
         body: JSON.stringify(values),
         headers: {
