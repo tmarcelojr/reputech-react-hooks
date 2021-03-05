@@ -21,7 +21,7 @@ const LoginRegisterModal = (props) => {
       const loginJson = await loginRes.json()
       console.log(loginJson)
       if(loginJson.status === 200) {
-        // props.updateUser()
+        props.updateUser()
         props.closeModal()
         setAuthMessage(null)
       }

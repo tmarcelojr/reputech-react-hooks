@@ -92,10 +92,9 @@ export default function App() {
     getCompanyData()
     getCompanyReviews()
     getRatings()
-    // checkLoginStatus()
+    checkLoginStatus()
   }, [])
 
-  // ============= commented out lines 95, 211, 318
   useEffect(() => {
     if(userReviews){
       async function organizeReviews() {
@@ -208,20 +207,24 @@ export default function App() {
   }
 
   // =============== AUTH ===============
-  // const checkLoginStatus = async () => {
-  //   try{
-  //     const checkLoginRes = await fetch('https://reputech-python.herokuapp.com/api/v1/users/logged_in')
-  //     const checkLoginJson = await checkLoginRes.json()
-  //     console.log(checkLoginJson)
-  //     if(checkLoginRes.status === 200 ) {
-  //      // Set user here to check logged in user with server
-  //      setUser(checkLoginJson.data.username)
-  //     //  window.$('#loginModal').modal('toggle')
-  //     }
-  //   } catch(err) {
-  //     console.log(err);
-  //   }
-  // }
+  const checkLoginStatus = async () => {
+    try{
+      const checkLoginRes = await fetch('https://reputech-python.herokuapp.com/api/v1/users/logged_in', {
+        method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+      })
+      const checkLoginJson = await checkLoginRes.json()
+      console.log(checkLoginJson)
+      if(checkLoginRes.status === 200 ) {
+       // Set user here to check logged in user with server
+       setUser(checkLoginJson.data.username)
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
   const logout = async () => {
     try {
@@ -315,7 +318,7 @@ export default function App() {
           pattern='^[a-zA-Z0-9_.-]*$'
         >
           <LoginRegisterModal
-            // updateUser={() => checkLoginStatus()}
+            updateUser={() => checkLoginStatus()}
             closeModal={() => window.$('#loginModal').modal('toggle')}
           />
         </div> {/* modal fade - login modal */}
