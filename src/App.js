@@ -55,15 +55,15 @@ export default function App() {
   // =============== FETCH CALLS ===============
 
   useEffect(() => {
-    // async function getCompanyData() {
-    //   try{
-    //     const companyDataRes = await fetch('https://reputech-python.herokuapp.com/api/v1/companies')
-    //     const companyDataJson = await companyDataRes.json()
-    //     setCompanyData(companyDataJson.data)
-    //   } catch(err) {
-    //     console.log(err);
-    //   }
-    // }
+    async function getCompanyData() {
+      try{
+        const companyDataRes = await fetch('https://reputech-python.herokuapp.com/api/v1/companies')
+        const companyDataJson = await companyDataRes.json()
+        setCompanyData(companyDataJson.data)
+      } catch(err) {
+        console.log(err);
+      }
+    }
 
     async function getCompanyReviews() {
       try{
@@ -75,24 +75,24 @@ export default function App() {
       }
     }
     
-    // async function getRatings() {
-    //   try{
-    //     const ratingRes = await fetch('https://reputech-python.herokuapp.com/api/v1/collected_reviews')
-    //     const ratingJson = await ratingRes.json()
-    //     let companyRatings = []
-    //     ratingJson.data.map(ratings => {
-    //       return companyRatings.push(Math.round(ratings[1] * 2/2))
-    //     })
-    //     setAverageRatings(companyRatings)
-    //   } catch(err) {
-    //     console.log(err);
-    //   }
-    // }
+    async function getRatings() {
+      try{
+        const ratingRes = await fetch('https://reputech-python.herokuapp.com/api/v1/collected_reviews')
+        const ratingJson = await ratingRes.json()
+        let companyRatings = []
+        ratingJson.data.map(ratings => {
+          return companyRatings.push(Math.round(ratings[1] * 2/2))
+        })
+        setAverageRatings(companyRatings)
+      } catch(err) {
+        console.log(err);
+      }
+    }
 
-    // getCompanyData()
+    getCompanyData()
     getCompanyReviews()
-    // getRatings()
-    // checkLoginStatus()
+    getRatings()
+    checkLoginStatus()
   }, [])
 
   useEffect(() => {
@@ -148,20 +148,20 @@ export default function App() {
 
   // =============== FAVORITES ===============
   // Get Favorites
-  // useEffect(() => {
-  //   async function getFavorites() {
-  //     try{
-  //       const favoritesRes = await fetch('https://reputech-python.herokuapp.com/api/v1/favorites')
-  //       const favoritesJson = await favoritesRes.json()
-  //       console.log('we are in getfavorites, favoritesJson.data', favoritesJson.data)
-  //       setFavorites(favoritesJson.data)
-  //       setIsLoading(false)
-  //     } catch(err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   getFavorites()
-  // }, [])
+  useEffect(() => {
+    async function getFavorites() {
+      try{
+        const favoritesRes = await fetch('https://reputech-python.herokuapp.com/api/v1/favorites')
+        const favoritesJson = await favoritesRes.json()
+        console.log('we are in getfavorites, favoritesJson.data', favoritesJson.data)
+        setFavorites(favoritesJson.data)
+        setIsLoading(false)
+      } catch(err) {
+        console.log(err);
+      }
+    }
+    getFavorites()
+  }, [])
 
   //Add Favorite
   const addFavorite = async (id) => {
@@ -207,24 +207,24 @@ export default function App() {
   }
 
   // =============== AUTH ===============
-  // const checkLoginStatus = async () => {
-  //   try{
-  //     const checkLoginRes = await fetch('https://reputech-python.herokuapp.com/api/v1/users/logged_in', {
-  //       method: 'GET',
-  //         headers: {
-  //           'Content-Type': 'application/json'
-  //         }
-  //     })
-  //     const checkLoginJson = await checkLoginRes.json()
-  //     console.log(checkLoginJson)
-  //     if(checkLoginRes.status === 200 ) {
-  //      // Set user here to check logged in user with server
-  //      setUser(checkLoginJson.data.username)
-  //     }
-  //   } catch(err) {
-  //     console.log(err);
-  //   }
-  // }
+  const checkLoginStatus = async () => {
+    try{
+      const checkLoginRes = await fetch('https://reputech-python.herokuapp.com/api/v1/users/logged_in', {
+        method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+      })
+      const checkLoginJson = await checkLoginRes.json()
+      console.log(checkLoginJson)
+      if(checkLoginRes.status === 200 ) {
+       // Set user here to check logged in user with server
+       setUser(checkLoginJson.data.username)
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
   const logout = async () => {
     try {
@@ -318,7 +318,7 @@ export default function App() {
           pattern='^[a-zA-Z0-9_.-]*$'
         >
           <LoginRegisterModal
-            // updateUser={() => checkLoginStatus()}
+            updateUser={() => checkLoginStatus()}
             closeModal={() => window.$('#loginModal').modal('toggle')}
           />
         </div> {/* modal fade - login modal */}
