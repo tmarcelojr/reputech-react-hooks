@@ -280,6 +280,7 @@ export default function App() {
 							</Link>
 						</li>
 					</ul>
+          <button onClick={() => checkLoginStatus()}>CHECK USER</button>
 					<ul className="navbar-nav ml-auto px-3">
 						{user === null ? (
 							<li className="nav-item nav-link" data-toggle="modal" data-target="#loginModal">
