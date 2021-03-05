@@ -225,11 +225,7 @@ export default function App() {
 	const checkLoginStatus = async () => {
 		try {
 			const checkLoginRes = await fetch('https://reputech-python.herokuapp.com/api/v1/users/logged_in', {
-				credentials: 'include',
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				}
+				credentials: 'include'
 			});
 			const checkLoginJson = await checkLoginRes.json();
 			console.log(checkLoginJson);
