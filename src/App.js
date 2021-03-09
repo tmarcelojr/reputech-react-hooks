@@ -98,7 +98,7 @@ export default function App() {
 		getCompanyData();
 		getCompanyReviews();
 		getRatings();
-		checkLoginStatus();
+		// checkLoginStatus();
 	}, []);
 
 	useEffect(
