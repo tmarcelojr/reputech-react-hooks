@@ -222,17 +222,9 @@ export default function App() {
 	};
 
 	// =============== AUTH ===============
-	const checkLoginStatus = async () => {
+	const checkLoginStatus = (user) => {
 		try {
-			const checkLoginRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/logged_in', {
-				credentials: 'include'
-			});
-			const checkLoginJson = await checkLoginRes.json();
-			console.log(checkLoginJson);
-			if (checkLoginRes.status === 200) {
-				// Set user here to check logged in user with server
-				setUser(checkLoginJson.data.username);
-			}
+			setUser(user)
 		} catch (err) {
 			console.log(err);
 		}
@@ -328,7 +320,7 @@ export default function App() {
 					pattern="^[a-zA-Z0-9_.-]*$"
 				>
 					<LoginRegisterModal
-						updateUser={(loginJson) => setUser(loginJson.data.username)}
+						updateUser={user => checkLoginStatus(user)}
 						closeModal={() => window.$('#loginModal').modal('toggle')}
 					/>
 				</div>{' '}
