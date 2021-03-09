@@ -224,7 +224,7 @@ export default function App() {
 	// =============== AUTH ===============
 	const checkLoginStatus = (user) => {
 		try {
-			setUser(user)
+			if(user) setUser(user)
 		} catch (err) {
 			console.log(err);
 		}
