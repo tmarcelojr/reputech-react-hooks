@@ -224,7 +224,7 @@ export default function App() {
 	// =============== AUTH ===============
 	const checkLoginStatus = (user) => {
 		try {
-			if(user) setUser(user)
+			if(user != undefined) setUser(user)
 		} catch (err) {
 			console.log(err);
 		}
@@ -320,7 +320,7 @@ export default function App() {
 					pattern="^[a-zA-Z0-9_.-]*$"
 				>
 					<LoginRegisterModal
-						updateUser={user => checkLoginStatus(user)}
+						updateUser={() => setUser(loginJson.data.username)}
 						closeModal={() => window.$('#loginModal').modal('toggle')}
 					/>
 				</div>{' '}
