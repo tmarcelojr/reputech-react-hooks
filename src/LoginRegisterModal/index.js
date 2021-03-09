@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies'
 import useForm from '../Utilities/useForm'
 import logo from '../Images/logo.png'
 
@@ -25,9 +24,6 @@ const LoginRegisterModal = (props) => {
         props.updateUser(loginJson)
         props.closeModal()
         setAuthMessage(null)
-        // const cookie_key = 'username'
-        // bake_cookie(cookie_key, loginJson.data.username)
-        // console.log('we are reading cookie', read_cookie(cookie_key))
       }
       else{
         setAuthMessage(loginJson.message)
