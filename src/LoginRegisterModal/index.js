@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies'
 import useForm from '../Utilities/useForm'
 import logo from '../Images/logo.png'
 
@@ -10,7 +11,7 @@ const LoginRegisterModal = (props) => {
 
   const login = async (values) => {
     try{
-      const loginRes = await fetch('https://reputech-python.herokuapp.com/api/v1/users/login', {
+      const loginRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/login', {
         credentials: 'include',
         method: 'POST',
         body: JSON.stringify(values),
@@ -21,9 +22,12 @@ const LoginRegisterModal = (props) => {
       const loginJson = await loginRes.json()
       console.log(loginJson)
       if(loginJson.status === 200) {
-        props.updateUser()
+        props.updateUser(loginJson)
         props.closeModal()
         setAuthMessage(null)
+        const cookie_key = 'username'
+        bake_cookie(cookie_key, loginJson.data.username)
+        console.log('we are reading cookie', read_cookie(cookie_key))
       }
       else{
         setAuthMessage(loginJson.message)
@@ -35,7 +39,7 @@ const LoginRegisterModal = (props) => {
 
   const register = async (values) => {
     try {
-      const registerRes = await fetch('https://reputech-python.herokuapp.com/api/v1/users/register', {
+      const registerRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/register', {
         method: 'POST',
         body: JSON.stringify(values),
         headers: {
