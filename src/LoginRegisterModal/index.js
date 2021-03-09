@@ -24,7 +24,8 @@ const LoginRegisterModal = (props) => {
       if(loginJson.status === 200) {
         const cookie_key = 'username'
         bake_cookie(cookie_key, loginJson.data.username)
-        props.updateUser(read_cookie(cookie_key))
+        const user = read_cookie(cookie_key)
+        props.updateUser(user)
         props.closeModal()
         setAuthMessage(null)
       }
