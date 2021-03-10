@@ -14,7 +14,9 @@ export default function ReviewsContainer(props) {
   // Company ratings
   const ratings = useContext(CompanyRatings)
   return(
-    <div className='my-5 company-card-container'>
+    <div className='company-card-wrapper'>
+      <div>hello</div>
+    <div className='company-card-container'>
       {
         loading.isLoading === false
         ?
@@ -35,6 +37,7 @@ export default function ReviewsContainer(props) {
         })
         : null
       }
+    </div>
     </div>
   )
 }

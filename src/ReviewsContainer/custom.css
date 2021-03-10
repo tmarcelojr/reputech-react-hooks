@@ -7,12 +7,16 @@
   display: flex;
 }
 
+.company-card-wrapper {
+ padding-top:5%;
+ background-color: #41778D;
+}
+
 .company-card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding-top: 50px;
-  margin: 20px;
+  padding-top: 5%;
 } 
 
 .company-card {
@@ -36,7 +40,7 @@
 }
 
 .no-gutters {
-	box-shadow: 10px 5px 5px lightgray;
+	box-shadow: 5px 2px 10px lightgray;
 }
 
 .card-title {

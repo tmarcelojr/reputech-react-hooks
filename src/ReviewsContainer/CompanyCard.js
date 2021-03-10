@@ -57,7 +57,7 @@ const CompanyCard = ({
                   />
                 </div>
               </div> {/* star-line */}
-              <small><i>Reputech rating:</i></small>
+              <small><i>RepuTech rating:</i></small>
               <div className='star-line'>
                 <div>
                   <h6 className='company_rating'>{averageCompanyUserRatings}</h6>

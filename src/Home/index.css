@@ -1,75 +1,44 @@
 .home-page-container {
-  max-height: 30rem;
+  background-image: url('../Images/pexels-photo-1229861.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
-  font-family: 'Playfair Display', serif;
-}
-
-.slogan {
-  font-size: 4em;
-  font-weight: 800;
-  opacity: .9;
-  margin-left: 20px;
-}
-
-.slogan-sentence {
-  font-size: 1.5em;
-  font-style: italic;
-  margin-left: 20px;
-}
-
-
-body {
-  overflow-x: hidden;
-}
-
-.section-one {
-  background-color: white;
-  position: relative;
-  padding: 100px 0 200px;
-  display: flex;
-}
-
-
-/* -------------------------------------------------------------------------
-   begin Separator
- * ------------------------------------------------------------------------- */
-.separator {
-  bottom: -4px;
-  left: 0;
-  overflow: hidden;
-  position: absolute;
-
   width: 100%;
-}
-/* -------------------------------------------------------------------------
-   end Separator
- * ------------------------------------------------------------------------- */
-
-/* begin Media Max-Width 767
-============================================================================ */
-
-@media screen and (max-width: 767px) {
-  .section-one {
-    padding: 130px 0 190px;
-  }
-
-  .separator {
-    bottom: -110px;
-  }
-
-  .separator_svg {
-    left: -20%;
-      position: relative;
-      transform: rotate(15deg);
-      width: 140%;
-  }
-
-  #home-page-image {
-    display: none;
-  }
-
+  height: 100vh;
+  /* font-family: 'Playfair Display', serif; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: left;
 }
 
-/* end Media Max-Width 767
-============================================================================ */
+#home-page-content {
+  width: 70%;
+}
+
+#first-line {
+  font-size: 2vw;
+  letter-spacing: 5px;
+}
+
+#second-line {
+  font-size: 6vw;
+  letter-spacing: 30px;
+  font-weight: 800;
+}
+
+#third-line {
+  font-size: 1.2vw;
+  width: 30%;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+#home-button {
+  background:rgb(246, 80,82);
+  letter-spacing: 2px;
+  border: none;
+  border-radius: 3px;
+  color: white;
+}
