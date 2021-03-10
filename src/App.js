@@ -200,16 +200,13 @@ export default function App() {
 	const removeFavorite = async (id) => {
 		const companyId = id.toString();
 		try {
-			const removeFavoriteRes = await fetch(
-				process.env.REACT_APP_API_URL + '/api/v1/favorites' + companyId,
-				{
-					credentials: 'include',
-					method: 'DELETE',
-					headers: {
-						'Content-Type': 'application/json'
-					}
+			const removeFavoriteRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/favorites' + companyId, {
+				credentials: 'include',
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json'
 				}
-			);
+			});
 			const removeFavoriteJson = await removeFavoriteRes.json();
 			if (removeFavoriteRes.status === 200) {
 				console.log('Successfully removed from favorites', removeFavoriteJson);
@@ -280,7 +277,7 @@ export default function App() {
 							</Link>
 						</li>
 					</ul>
-          <button onClick={() => checkLoginStatus()}>CHECK USER</button>
+					<button onClick={() => checkLoginStatus()}>CHECK USER</button>
 					<ul className="navbar-nav ml-auto px-3">
 						{user === null ? (
 							<li className="nav-item nav-link" data-toggle="modal" data-target="#loginModal">
