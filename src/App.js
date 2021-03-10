@@ -331,7 +331,7 @@ export default function App() {
 						updateUser={(loginJson) => setUser(loginJson.data.username)}
 						closeModal={() => window.$('#loginModal').modal('toggle')}
 					/>
-				</div>{' '}
+				</div>
 				{/* modal fade - login modal */}
 				<Switch>
 					{/* Encapsulate everything you want to have access to Providers' values */}
