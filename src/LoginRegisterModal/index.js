@@ -10,8 +10,13 @@ const LoginRegisterModal = (props) => {
 
   const login = async (values) => {
     try{
+<<<<<<< HEAD
       const loginRes = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/login', {
         credentials: 'include',
+=======
+      const loginRes = await fetch('https://reputech-python.herokuapp.com/api/v1/users/login', {
+        credentials: 'same-origin',
+>>>>>>> parent of c2689ea... changed login credentials to include not includes
         method: 'POST',
         body: JSON.stringify(values),
         headers: {
