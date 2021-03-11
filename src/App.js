@@ -258,7 +258,7 @@ export default function App() {
 			<Router>
 				<nav className="navbar navbar-expand-sm navbar-dark fixed-top">
 					<ul className="navbar-nav mr-auto px-3">
-						<li className="nav-item">
+						<li id='logo-container'>
 							<img id="logo" src={reputech_logo} alt="logo" />
 						</li>
 						<li className="nav-item">
@@ -271,11 +271,11 @@ export default function App() {
 								Reviews
 							</Link>
 						</li>
-						<li className="nav-item">
+						{/* <li className="nav-item">
 							<Link className="nav-link" to="/favorites">
 								Favorites
 							</Link>
-						</li>
+						</li> */}
 					</ul>
 
 					<ul className="navbar-nav ml-auto px-3">
@@ -307,7 +307,7 @@ export default function App() {
 										</button>
 									</div>
 								</div>
-								<i className="username">{user}</i>
+								<i className="username"><small>{user}</small></i>
 							</li>
 						)}
 					</ul>

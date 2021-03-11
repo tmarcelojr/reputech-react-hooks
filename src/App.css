@@ -3,15 +3,19 @@
 }
 
 /* Nav bar */
+#logo-container {
+  width: fit-content;
+  height: 50%;
+  /* width: 50%; */
+  background-color: red;
+}
+
 #logo {
-  height: 25pt;
-  margin-top: 5pt;
-  margin-right: 10pt;
+  width: inherit;
 }
 
 .navbar {
   background: #264653;
-  font-size: 1.4em;
 }
 
 /* Login/Register Modal */
@@ -136,4 +140,12 @@
   -webkit-transform: translate(-100%, 0);
   -o-transform: translate(-100%, 0);
   transform: translate(-100%, 0);
+}
+
+/* Media queries */
+@media(max-width: 768px) {
+  .navbar {
+    /* background-color: red; */
+    font-size: 2vw;
+  }
 }
