@@ -32,13 +32,13 @@ const CompanyCard = ({
   return(
     <div className='company-card'>
     {/* Company Card */}
-    <div className='card mb-5'>
-      <div className='row no-gutters' style={{ width: '35rem', height: '15rem' }}>
+    <div className='card mb-3'>
+      <div className='' id='card-body-wrapper'>
         <div id='img-container' className='col-md-3'>
-          <img src={websiteLogo} style={{ height: '100px', width: '100px'}} className='card-img' alt='company logo' />
+          <img src={websiteLogo} className='card-img img-fluid' alt='company logo' />
         </div> { /* col-md-2 */ }
-        <div className='col-md-8 text-left'>
-          <div className='card-body'>
+        <div className='col text-left' id='test'>
+          <div className='card-body' id='card-body-content'>
             <div className='card-title'>
               <strong>{companyName}</strong>
             </div> {/* card-title */}
@@ -52,7 +52,7 @@ const CompanyCard = ({
                     rating={averageCompanyRatings} 
                     starRatedColor='orange'
                     numberOfStars={5}
-                    starDimension='20px'
+                    starDimension='2vw'
                     name='rating'
                   />
                 </div>
@@ -67,7 +67,7 @@ const CompanyCard = ({
                     rating={averageCompanyUserRatings}
                     starRatedColor='crimson'
                     numberOfStars={5}
-                    starDimension='20px'
+                    starDimension='2vw'
                     name='rating'
                   />
                 </div>

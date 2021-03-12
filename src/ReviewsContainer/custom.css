@@ -9,6 +9,7 @@
 
 #search-container {
 	width: 50%;
+	margin: 1%;
 }
 
 .disclaimer {
@@ -20,8 +21,21 @@
 	font-size: 1rem;
 }
 
+#disclaimer-body {
+	padding: 0;
+}
+
+.disclaimer ul {
+	padding: 2% 5%;
+}
+
+#disclaimer-button {
+	margin: 1%;
+	font-size: 1vw;
+}
+
 .wrapper {
-  padding-top: 10%;
+  padding-top: 5%;
   width: 100%;
   height: 100vh;
   background-color: #f6f6f6;
@@ -38,13 +52,15 @@
 .company-card-container {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-around;
+	justify-content: center;
+	align-items: center;
 	padding-top: 1%;
+	width: 100%;
 }
 
 .company-card {
-	width: fit-content;
-	padding: 5px;
+	margin: 0;
+	width: 70%;
 }
 
 .company_rating {
@@ -53,9 +69,21 @@
 	font-weight: 700;
 }
 
-.card-body {
+#card-body-wrapper {
 	display: flex;
-	display: inline-block;
+	margin: 5%;
+}
+
+#card-body-content {
+	padding: 0;
+}
+
+#img-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 30%;
+	padding: 0;
 }
 
 .reviews-list {
@@ -79,21 +107,14 @@
 	align-items: center;
 }
 
-#img-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
 
 .reviews-button-area {
 	background-color: #f0f0f0;
 	position: absolute;
 	right: 0;
+	top: 0;
 	height: 100%;
-	width: 8%;
 	display: flex;
-	display: inline-block;
-	padding-top: 60px;
 }
 
 .user-review-buttons {
@@ -104,13 +125,17 @@
 	border: none;
 	background: transparent;
 	font-size: 2em;
-	margin-bottom: 10px;
 }
 
 .review-button {
 	border: none;
 	background: transparent;
 	font-size: 1.5em;
+}
+
+.card-text {
+	font-size: 2vw;
+	padding-bottom: 2%;
 }
 
 /* Review box */
@@ -352,4 +377,86 @@
 .trigger-btn {
 	display: inline-block;
 	margin: 100px auto;
+}
+
+
+@media(max-width: 768px) {
+	#card-body-wrapper {
+		display: flex;
+		font-size: 2vw;
+	}
+
+	.company-card {
+		width: 90%;
+	}
+
+	.disclaimer {
+		width: 90%;
+		margin: 2%;
+	}
+
+	#disclaimer-button {
+		font-size: 2vw;
+	}
+
+	#disclaimer-body {
+		padding: 1% 5%;
+		font-size: 2vw;
+	}
+
+	.disclaimer ul {
+		padding: 0;
+		margin: 0;
+	}
+
+	#search-containter {
+		margin: 0;
+		padding: 0;
+	}
+
+	#search-field {
+		height: 20px;
+	}
+
+	#search-tag {
+		height: 20px;
+	}
+
+	#search-text {
+		font-size: 2vw;
+	}
+
+	/* modal */
+	.modal-dialog{
+    position: absolute;
+		top: 0;
+		left: 20%;
+  }
+
+	.modal-header {
+		padding: 3%;
+		display: flex;
+		justify-self: center;
+		align-items: center;
+	}
+
+	.modal-body {
+		padding: 4%;
+	}
+
+	.modal-title {
+		font-size: 3vw;
+	}
+
+	.card-header {
+		padding: 4%;
+	}
+	.card-header p {
+		margin: 0;
+	}
+
+	.reviews-list {
+		margin: 0;
+		padding: 4%;
+	}
 }

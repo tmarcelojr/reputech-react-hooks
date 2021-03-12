@@ -49,7 +49,6 @@ const CompanyUserReviews = (props) => {
                       <div
                       className='card border-dark mb-3'
                       id='review-card'
-                      style={{ maxWidth: '100% '}}
                       >
                         <div className='card-header'>
                           <div className='user-review-buttons'>
@@ -58,7 +57,7 @@ const CompanyUserReviews = (props) => {
                                 rating={review.stars}
                                 starRatedColor='crimson'
                                 numberOfStars={5}
-                                starDimension='20px'
+                                starDimension='2vw'
                                 name='rating'
                               />
                             </div>

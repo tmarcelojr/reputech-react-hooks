@@ -36,9 +36,9 @@ export default function ReviewsContainer(props) {
 	return (
 		<div className="wrapper">
 			<div className="content-container">
-				<div className="input-group input-group-sm mb-3" id="search-container">
-					<div className="input-group-prepend">
-						<span className="input-group-text" id="inputGroup-sizing-sm">
+				<div className="input-group input-group-sm" id="search-container">
+					<div className="input-group-prepend" id='search-tag'>
+						<span className="input-group-text search-text" id="search-text">
 							Search
 						</span>
 					</div>
@@ -47,10 +47,11 @@ export default function ReviewsContainer(props) {
 						className="form-control"
 						aria-label="Small"
 						aria-describedby="inputGroup-sizing-sm"
+						id='search-field'
 						onChange={handleSearch}
 					/>
 				</div>
-				<p>
+				<div>
 					<button
 						className="btn btn-info btn-sm"
 						type="button"
@@ -62,9 +63,9 @@ export default function ReviewsContainer(props) {
 					>
 						DISCLAIMER
 					</button>
-				</p>
+				</div>
 				<div className="collapse disclaimer" id="collapseExample">
-					<div className="card card-body">
+					<div className="card card-body" id='disclaimer-body'>
 						<ul>
 							<li>
 								The <span style={{ color: 'gold' }}>gold stars</span> represent an average rating of

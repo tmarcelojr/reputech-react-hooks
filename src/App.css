@@ -150,8 +150,14 @@
   .navbar {
     display: flex;
     font-size: 2vw;
-    max-height: 50px;
+    max-height: 30px;
     padding: 0 10px;
+  }
+  .nav-item {
+    padding: 0;
+  }
+  .nav-link {
+    padding: 0;
   }
   
   #navbar-menu {
