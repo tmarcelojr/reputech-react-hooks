@@ -256,11 +256,11 @@ export default function App() {
 	return (
 		<div className="App">
 			<Router>
-				<nav className="navbar navbar-expand-sm navbar-dark fixed-top">
-					<ul className="navbar-nav mr-auto px-3">
-						<li id='logo-container'>
+				<nav className="navbar navbar-expand-sm navbar-dark">
+						<div id='logo-container'>
 							<img id="logo" src={reputech_logo} alt="logo" />
-						</li>
+						</div>
+					<ul className="navbar-nav mr-auto" id='navbar-menu'>
 						<li className="nav-item">
 							<Link className="nav-link" to="/">
 								Home
@@ -278,7 +278,7 @@ export default function App() {
 						</li> */}
 					</ul>
 
-					<ul className="navbar-nav ml-auto px-3">
+					<ul className="navbar-nav">
 						{user === null ? (
 							<li className="nav-item nav-link" data-toggle="modal" data-target="#loginModal">
 								<span className="login">

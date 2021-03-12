@@ -63,8 +63,8 @@ export default function ReviewsContainer(props) {
 						DISCLAIMER
 					</button>
 				</p>
-				<div className="collapse" id="collapseExample">
-					<div className="card card-body" id="disclaimer-note">
+				<div className="collapse disclaimer" id="collapseExample">
+					<div className="card card-body">
 						<ul>
 							<li>
 								The <span style={{ color: 'gold' }}>gold stars</span> represent an average rating of

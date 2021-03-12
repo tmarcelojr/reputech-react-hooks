@@ -1,21 +1,24 @@
-.App {
-  text-align: center;
-}
-
 /* Nav bar */
 #logo-container {
-  width: fit-content;
-  height: 50%;
-  /* width: 50%; */
-  background-color: red;
+  width: 20vw;
 }
 
 #logo {
-  width: inherit;
+  width: 100%
+}
+
+#navbar-menu {
+  list-style: none;
+}
+
+#navbar-menu li {
+  padding: 10px;
 }
 
 .navbar {
+  display: flex;
   background: #264653;
+  height: auto;
 }
 
 /* Login/Register Modal */
@@ -145,7 +148,14 @@
 /* Media queries */
 @media(max-width: 768px) {
   .navbar {
-    /* background-color: red; */
+    display: flex;
     font-size: 2vw;
+    max-height: 50px;
+    padding: 0 10px;
+  }
+  
+  #navbar-menu {
+    display: flex;
+    flex-direction:row
   }
 }

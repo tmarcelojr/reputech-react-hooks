@@ -11,11 +11,13 @@
 	width: 50%;
 }
 
-#disclaimer-note {
-	/* background-color: red; */
+.disclaimer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 50%;
 	text-align: left;
 	font-size: 1rem;
-	width: 50%;
 }
 
 .wrapper {
